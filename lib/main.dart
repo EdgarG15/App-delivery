@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => LoginPage()),
-        GetPage(name: '/register', page: () => const RegisterPage())
+        GetPage(name: '/register', page: () => RegisterPage())
       ],
       theme: ThemeData(
         primaryColor: Colors.amber,

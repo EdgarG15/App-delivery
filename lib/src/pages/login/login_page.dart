@@ -73,7 +73,9 @@ class LoginPage extends StatelessWidget {
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            controller.login();
+          },
           style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 15)),
           child: const Text(
@@ -86,9 +88,10 @@ class LoginPage extends StatelessWidget {
   Widget _textFieldEmail() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 40),
-      child: const TextField(
+      child: TextField(
+        controller: controller.emailController,
         keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: 'Correo Electronico',
             prefixIcon: Icon(Icons.email_outlined)),
       ),
@@ -98,10 +101,11 @@ class LoginPage extends StatelessWidget {
   Widget _textFieldPassword() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 40),
-      child: const TextField(
+      child: TextField(
+        controller: controller.passwordController,
         keyboardType: TextInputType.text,
         obscureText: true,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: 'Contraseña', prefixIcon: Icon(Icons.lock)),
       ),
     );
