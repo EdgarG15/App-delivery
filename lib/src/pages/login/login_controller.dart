@@ -2,6 +2,7 @@ import 'package:app_delivery/src/models/response_api.dart';
 import 'package:app_delivery/src/providers/users_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
@@ -24,6 +25,7 @@ class LoginController extends GetxController {
       ResponseApi responseApi = await usersProvider.login(email, password);
       print("Response Api: ${responseApi.toJson()}");
       if (responseApi.success == true) {
+        GetStorage().write('user', responseApi.data);
         Get.snackbar('Login Exitoso', responseApi.message ?? '');
       } else {
         Get.snackbar("Login Fallido", responseApi.message ?? '');
