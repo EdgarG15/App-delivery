@@ -1,3 +1,4 @@
+import 'package:app_delivery/src/pages/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -32,7 +33,8 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => LoginPage()),
-        GetPage(name: '/register', page: () => RegisterPage())
+        GetPage(name: '/register', page: () => RegisterPage()),
+        GetPage(name: '/home', page: () => HomePage()),
       ],
       theme: ThemeData(
         primaryColor: Colors.amber,

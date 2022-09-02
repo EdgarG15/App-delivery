@@ -25,12 +25,17 @@ class LoginController extends GetxController {
       ResponseApi responseApi = await usersProvider.login(email, password);
       print("Response Api: ${responseApi.toJson()}");
       if (responseApi.success == true) {
-        GetStorage().write('user', responseApi.data);
-        Get.snackbar('Login Exitoso', responseApi.message ?? '');
+        GetStorage()
+            .write('user', responseApi.data); //Datos del usuario en sesión
+        goToHomePage();
       } else {
         Get.snackbar("Login Fallido", responseApi.message ?? '');
       }
     }
+  }
+
+  void goToHomePage() {
+    Get.toNamed('/home');
   }
 
   bool isValidForm(String email, String password) {
