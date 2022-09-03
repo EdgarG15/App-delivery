@@ -8,7 +8,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text("Home Page")),
+      body: Center(
+          child: ElevatedButton(
+        onPressed: (() {
+          controller.signOut();
+        }),
+        child: const Text("Cerrar Sesión"),
+      )),
     );
   }
 }

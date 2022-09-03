@@ -38,7 +38,7 @@ class LoginPage extends StatelessWidget {
 
   Widget _textAppName() {
     return const Text(
-      'Delivery MYSQL',
+      'EcoTech',
       style: TextStyle(
           fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
     );

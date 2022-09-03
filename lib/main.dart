@@ -2,9 +2,11 @@ import 'package:app_delivery/src/pages/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
+import 'src/models/user.dart';
 import 'src/pages/login/login_page.dart';
 import 'src/pages/register/register_page.dart';
+
+User userSession = User.fromJson(GetStorage().read('user') ?? {});
 
 void main() async {
   await GetStorage.init();
@@ -30,7 +32,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Delivery App",
-      initialRoute: '/',
+      initialRoute: userSession.id != null ? '/home' : '/',
       getPages: [
         GetPage(name: '/', page: () => LoginPage()),
         GetPage(name: '/register', page: () => RegisterPage()),

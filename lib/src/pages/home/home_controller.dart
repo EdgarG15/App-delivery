@@ -9,4 +9,8 @@ class HomeController extends GetxController {
     // ignore: avoid_print
     print("Usuario de sesion: ${user.toJson()}");
   }
+  void signOut() {
+    GetStorage().remove('user');
+    Get.offNamedUntil('/', (route) => false);
+  }
 }
