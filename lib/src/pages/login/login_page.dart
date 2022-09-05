@@ -148,11 +148,11 @@ class LoginPage extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(top: 20, bottom: 15),
         alignment: Alignment.center,
-        child: Image.asset(
-          'assets/img/delivery.png',
-          width: 130,
-          height: 130,
-        ),
+        // child: Image.asset(
+        //   'assets/img/delivery.png',
+        //   width: 130,
+        //   height: 130,
+        // ),
       ),
     );
   }

@@ -43,7 +43,8 @@ class registerController extends GetxController {
 
       print('RESPONSE: ${response.body}');
 
-      Get.snackbar('Formulario valido', 'Envia tu petición');
+      Get.snackbar('Formulario valido', 'Registro con exito');
+      goToLoginPage();
     }
   }
 
@@ -92,41 +93,45 @@ class registerController extends GetxController {
     return true;
   }
 
-  Future selectImage(ImageSource imageSource) async {
-    XFile? image = await picker.pickImage(source: imageSource);
-    if (image != null) {
-      imageFile = File(image.path);
-      update();
-    }
+  void goToLoginPage() {
+    Get.toNamed('/');
   }
 
-  void showAlertDialog(BuildContext context) {
-    Widget galleryButton = ElevatedButton(
-        onPressed: () {
-          Get.back();
-          selectImage(ImageSource.gallery);
-        },
-        child: const Text(
-          "Galeria",
-          style: TextStyle(color: Colors.black),
-        ));
-    Widget camaraButton = ElevatedButton(
-        onPressed: () {
-          Get.back();
-          selectImage(ImageSource.camera);
-        },
-        child: const Text(
-          "Camara",
-          style: TextStyle(color: Colors.black),
-        ));
-    AlertDialog alertDialog = AlertDialog(
-      title: const Text("Selecciona una Opcion"),
-      actions: [galleryButton, camaraButton],
-    );
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alertDialog;
-        });
-  }
+  // Future selectImage(ImageSource imageSource) async {
+  //   XFile? image = await picker.pickImage(source: imageSource);
+  //   if (image != null) {
+  //     imageFile = File(image.path);
+  //     update();
+  //   }
+  // }
+
+  // void showAlertDialog(BuildContext context) {
+  //   Widget galleryButton = ElevatedButton(
+  //       onPressed: () {
+  //         Get.back();
+  //         selectImage(ImageSource.gallery);
+  //       },
+  //       child: const Text(
+  //         "Galeria",
+  //         style: TextStyle(color: Colors.black),
+  //       ));
+  //   Widget camaraButton = ElevatedButton(
+  //       onPressed: () {
+  //         Get.back();
+  //         selectImage(ImageSource.camera);
+  //       },
+  //       child: const Text(
+  //         "Camara",
+  //         style: TextStyle(color: Colors.black),
+  //       ));
+  //   AlertDialog alertDialog = AlertDialog(
+  //     title: const Text("Selecciona una Opcion"),
+  //     actions: [galleryButton, camaraButton],
+  //   );
+  //   showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return alertDialog;
+  //       });
+  // }
 }
