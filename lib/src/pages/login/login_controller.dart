@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../../models/user.dart';
+
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -27,16 +29,21 @@ class LoginController extends GetxController {
       if (responseApi.success == true) {
         GetStorage()
             .write('user', responseApi.data); //Datos del usuario en sesión
-        //goToHomePage();
-        goToRolesPage();
+        //User user = User.fromJson(responseApi.data);
+        User myUser = User.fromJson(GetStorage().read('user') ?? {});
+        if (myUser.roles!.length > 1) {
+          goToRolesPage();
+        } else {
+          goToClientPage();
+        }
       } else {
         Get.snackbar("Login Fallido", responseApi.message ?? '');
       }
     }
   }
 
-  void goToHomePage() {
-    Get.offNamedUntil('/home', (route) => false);
+  void goToClientPage() {
+    Get.offNamedUntil('/client/products/list', (route) => false);
   }
 
   void goToRolesPage() {

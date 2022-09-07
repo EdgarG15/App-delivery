@@ -45,9 +45,14 @@ class RolesPages extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        Text(
-          rol.name ?? '',
-          style: const TextStyle(fontSize: 16, color: Colors.black),
+        ElevatedButton(
+          onPressed: () {
+            controller.goToPageRol(rol);
+          },
+          child: Text(
+            rol.name ?? '',
+            style: const TextStyle(fontSize: 16, color: Colors.black),
+          ),
         )
       ],
     );
