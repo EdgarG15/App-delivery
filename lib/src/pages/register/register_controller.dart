@@ -4,6 +4,7 @@ import 'package:app_delivery/src/providers/users_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 import '../../models/user.dart';
 
@@ -19,7 +20,7 @@ class registerController extends GetxController {
   ImagePicker picker = ImagePicker();
   File? imageFile;
 
-  void register() async {
+  void register(BuildContext context) async {
     String email = emailController.text.trim();
     String name = nameController.text;
     String lastname = lastnameController.text;
@@ -31,6 +32,8 @@ class registerController extends GetxController {
     print('Password: ${password}');
 
     if (isValidForm(email, name, lastname, phone, password, confirmPassword)) {
+      ProgressDialog progressDialog = ProgressDialog(context: context);
+      progressDialog.show(max: 100, msg: 'Registrando datos...');
       User user = User(
         email: email,
         name: name,
@@ -42,7 +45,7 @@ class registerController extends GetxController {
       Response response = await usersProvider.create(user);
 
       print('RESPONSE: ${response.body}');
-
+      progressDialog.close();
       Get.snackbar('Formulario valido', 'Registro con exito');
       goToLoginPage();
     }
