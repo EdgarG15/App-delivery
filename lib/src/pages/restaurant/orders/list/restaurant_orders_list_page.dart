@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'restaurant_orders_list_controller.dart';
+
 class RestaurantOrdersListPage extends StatelessWidget {
-  RestaurantOrdersListPage({Key? key}) : super(key: key);
-  RestaurantOrdersListPage con = Get.put(RestaurantOrdersListPage());
+  RestaurantOrdersListController con =
+      Get.put(RestaurantOrdersListController());
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text("Restaurant"),
+        child: Text('Restaurant Orders List'),
       ),
     );
   }
