@@ -1,9 +1,9 @@
+import 'package:app_delivery/src/pages/client/profile/info/client_profile_info_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../utils/custom_animated_bottom_bar.dart';
 import '../../../delivery/orders/list/delivery_orders_list_page.dart';
-import '../../../register/register_page.dart';
 import '../../../restaurant/orders/list/restaurant_orders_list_page.dart';
 import 'client_product_list_controller.dart';
 
@@ -19,7 +19,7 @@ class ClientProductsListPage extends StatelessWidget {
               children: [
                 RestaurantOrdersListPage(),
                 DeliveryOrdersListPage(),
-                RegisterPage()
+                ClientProfileInfoPage()
               ],
             )));
   }
