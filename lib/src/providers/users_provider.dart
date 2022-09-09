@@ -1,19 +1,14 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 // ignore: depend_on_referenced_packages
-import 'package:path/path.dart';
-import 'package:http/http.dart' as http;
 import 'package:app_delivery/src/environment/environment.dart';
 import 'package:app_delivery/src/models/response_api.dart';
 import 'package:app_delivery/src/models/user.dart';
 
-import '../../main.dart';
-
 class UsersProvider extends GetConnect {
   // ignore: prefer_interpolation_to_compose_strings
   String url = Environment.API_URL + 'api/users';
+  User userSession = User.fromJson(GetStorage().read('user') ?? {});
 
   Future<Response> create(User user) async {
     Response response = await post('$url/create', user.toJson(),
@@ -37,7 +32,6 @@ class UsersProvider extends GetConnect {
       Get.snackbar('Error', 'No estas autorizado para realizar esta peticion');
       return ResponseApi();
     }
-
     ResponseApi responseApi = ResponseApi.fromJson(response.body);
 
     return responseApi;
