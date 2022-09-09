@@ -9,6 +9,8 @@ import 'package:app_delivery/src/environment/environment.dart';
 import 'package:app_delivery/src/models/response_api.dart';
 import 'package:app_delivery/src/models/user.dart';
 
+import '../../main.dart';
+
 class UsersProvider extends GetConnect {
   // ignore: prefer_interpolation_to_compose_strings
   String url = Environment.API_URL + 'api/users';
@@ -18,6 +20,27 @@ class UsersProvider extends GetConnect {
         headers: {'Content-Type': 'application/json'});
 
     return response;
+  }
+
+  Future<ResponseApi> update(User user) async {
+    Response response = await put('$url/update', user.toJson(), headers: {
+      'Content-Type': 'application/json',
+      'Authorization': userSession.sessionToken ?? ''
+    });
+
+    if (response.body == null) {
+      Get.snackbar('Error', 'No se pudo actualizar la informacion');
+      return ResponseApi();
+    }
+
+    if (response.statusCode == 401) {
+      Get.snackbar('Error', 'No estas autorizado para realizar esta peticion');
+      return ResponseApi();
+    }
+
+    ResponseApi responseApi = ResponseApi.fromJson(response.body);
+
+    return responseApi;
   }
 
   // Future<Stream> createWithImage(User user, File image) async {

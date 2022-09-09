@@ -9,14 +9,16 @@ class ClientProfileInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          _backgroundCover(context),
-          _boxForm(context),
-          //_imageUser(context),
-          _buttomSignOut(),
-          Column(),
-        ],
+      body: Obx(
+        () => Stack(
+          children: [
+            _backgroundCover(context),
+            _boxForm(context),
+            //_imageUser(context),
+            _buttomSignOut(),
+            Column(),
+          ],
+        ),
       ),
     );
   }
@@ -78,7 +80,7 @@ class ClientProfileInfoPage extends StatelessWidget {
         leading: Icon(Icons.person),
         title: Text("Username"),
         subtitle: Text(
-            '${controller.user.name ?? ''} ${controller.user.lastname ?? ''}'),
+            '${controller.user.value.name ?? ''} ${controller.user.value.lastname ?? ''}'),
       ),
     );
   }
@@ -89,7 +91,7 @@ class ClientProfileInfoPage extends StatelessWidget {
       child: ListTile(
         leading: Icon(Icons.email),
         title: Text("Email"),
-        subtitle: Text(controller.user.email ?? ''),
+        subtitle: Text(controller.user.value.email ?? ''),
       ),
     );
   }
@@ -100,7 +102,7 @@ class ClientProfileInfoPage extends StatelessWidget {
       child: ListTile(
         leading: Icon(Icons.phone_android),
         title: Text("Telefono"),
-        subtitle: Text(controller.user.phone ?? ''),
+        subtitle: Text(controller.user.value.phone ?? ''),
       ),
     );
   }
