@@ -1,3 +1,4 @@
+import 'package:app_delivery/src/pages/client/home/client_home_page.dart';
 import 'package:app_delivery/src/pages/client/products/list/client_products_list_page.dart';
 import 'package:app_delivery/src/pages/client/profile/info/client_profile_info_page.dart';
 import 'package:app_delivery/src/pages/client/profile/update/client_profile_update_page.dart';
@@ -32,6 +33,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    //print('El token de sesion brou: ${userSession.sessionToken}');
   }
 
   @override
@@ -44,7 +46,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: userSession.id != null
           ? userSession.roles!.length > 1
               ? '/roles'
-              : '/client/products/list'
+              : '/client/home'
           : '/',
       getPages: [
         GetPage(name: '/', page: () => LoginPage()),
@@ -60,6 +62,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(
             name: '/client/products/list',
             page: () => ClientProductsListPage()),
+        GetPage(name: '/client/home', page: () => ClientHomePage()),
         GetPage(
             name: '/client/profile/info', page: () => ClientProfileInfoPage()),
         GetPage(
