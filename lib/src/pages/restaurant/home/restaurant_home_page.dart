@@ -1,14 +1,17 @@
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable
+
 import 'package:app_delivery/src/pages/client/profile/info/client_profile_info_page.dart';
+import 'package:app_delivery/src/pages/restaurant/categories/create/restaurant_categories_create_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/custom_animated_bottom_bar.dart';
 import '../../delivery/orders/list/delivery_orders_list_page.dart';
 import '../../restaurant/orders/list/restaurant_orders_list_page.dart';
-import 'client_home_controller.dart';
+import 'restaurant_home_controller.dart';
 
-class ClientHomePage extends StatelessWidget {
-  ClientHomeController con = Get.put(ClientHomeController());
+class RestaurantHomePage extends StatelessWidget {
+  RestaurantHomeController con = Get.put(RestaurantHomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +21,7 @@ class ClientHomePage extends StatelessWidget {
               index: con.indexTab.value,
               children: [
                 RestaurantOrdersListPage(),
+                RestaurantCategoriesCreateePage(),
                 DeliveryOrdersListPage(),
                 ClientProfileInfoPage()
               ],
@@ -35,13 +39,18 @@ class ClientHomePage extends StatelessWidget {
           onItemSelected: (index) => con.changeTab(index),
           items: [
             BottomNavyBarItem(
-                icon: Icon(Icons.apps),
-                title: Text('Home'),
+                icon: Icon(Icons.list_alt),
+                title: const Text('Pedidos'),
                 activeColor: Colors.white,
                 inactiveColor: Colors.black),
             BottomNavyBarItem(
-                icon: Icon(Icons.list),
-                title: Text('Mis pedidos'),
+                icon: Icon(Icons.category),
+                title: Text('Categoria'),
+                activeColor: Colors.white,
+                inactiveColor: Colors.black),
+            BottomNavyBarItem(
+                icon: Icon(Icons.restaurant_menu),
+                title: Text('Producto'),
                 activeColor: Colors.white,
                 inactiveColor: Colors.black),
             BottomNavyBarItem(
