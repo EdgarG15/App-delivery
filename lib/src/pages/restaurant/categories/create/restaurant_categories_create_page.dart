@@ -1,7 +1,11 @@
+import 'package:app_delivery/src/pages/restaurant/categories/create/restaurant_categories_create_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RestaurantCategoriesCreateePage extends StatelessWidget {
+  RestaurantCategoriesCreateController controller =
+      Get.put(RestaurantCategoriesCreateController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,19 +46,21 @@ class RestaurantCategoriesCreateePage extends StatelessWidget {
             _textYourInfo(),
             _textFieldName(),
             _textFieldDescription(),
-            _buttonUpdate(context),
+            _buttonCreate(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buttonUpdate(BuildContext context) {
+  Widget _buttonCreate(BuildContext context) {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            controller.createCategory();
+          },
           style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 15)),
           child: const Text(
@@ -68,7 +74,7 @@ class RestaurantCategoriesCreateePage extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
-        //controller: controller.nameController,
+        controller: controller.nameController,
         keyboardType: TextInputType.text,
         decoration: const InputDecoration(
             hintText: 'Nombre', prefixIcon: Icon(Icons.category_rounded)),
@@ -98,7 +104,7 @@ class RestaurantCategoriesCreateePage extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
       child: TextField(
-        //controller: controller.lastnameController,
+        controller: controller.descriptionController,
         keyboardType: TextInputType.text,
         maxLines: 4,
         decoration: InputDecoration(
