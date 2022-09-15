@@ -77,8 +77,8 @@ class ClientProfileInfoPage extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 20, bottom: 1),
       child: ListTile(
-        leading: Icon(Icons.person),
-        title: Text("Username"),
+        leading: const Icon(Icons.person),
+        title: const Text("Username"),
         subtitle: Text(
             '${controller.user.value.name ?? ''} ${controller.user.value.lastname ?? ''}'),
       ),
@@ -89,8 +89,8 @@ class ClientProfileInfoPage extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 1, bottom: 1),
       child: ListTile(
-        leading: Icon(Icons.email),
-        title: Text("Email"),
+        leading: const Icon(Icons.email),
+        title: const Text("Email"),
         subtitle: Text(controller.user.value.email ?? ''),
       ),
     );
@@ -100,8 +100,8 @@ class ClientProfileInfoPage extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 1, bottom: 1),
       child: ListTile(
-        leading: Icon(Icons.phone_android),
-        title: Text("Telefono"),
+        leading: const Icon(Icons.phone_android),
+        title: const Text("Telefono"),
         subtitle: Text(controller.user.value.phone ?? ''),
       ),
     );
