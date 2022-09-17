@@ -55,15 +55,12 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/home', page: () => HomePage()),
         GetPage(name: '/roles', page: () => RolesPages()),
         GetPage(
-            name: '/restaurant/orders/list',
-            page: () => RestaurantOrdersListPage()),
+            name: '/restaurant/orders/list', page: () => RestaurantHomePage()),
         GetPage(name: '/restaurant/home', page: () => RestaurantHomePage()),
         GetPage(
             name: '/delivery/orders/list',
             page: () => DeliveryOrdersListPage()),
-        GetPage(
-            name: '/client/products/list',
-            page: () => ClientProductsListPage()),
+        GetPage(name: '/client/products/list', page: () => ClientHomePage()),
         GetPage(name: '/client/home', page: () => ClientHomePage()),
         GetPage(
             name: '/client/profile/info', page: () => ClientProfileInfoPage()),
