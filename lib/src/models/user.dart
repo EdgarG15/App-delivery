@@ -1,17 +1,13 @@
-// To parse this JSON data, do
-//
-//     final user = userFromJson(jsonString);
-
 import 'dart:convert';
 
-import 'package:app_delivery/src/models/rol.dart';
+import 'rol.dart';
 
 User userFromJson(String str) => User.fromJson(json.decode(str));
 
 String userToJson(User data) => json.encode(data.toJson());
 
 class User {
-  String? id;
+  String? id; //NULL SAFETY
   String? email;
   String? name;
   String? lastname;
@@ -45,6 +41,17 @@ class User {
             ? []
             : List<Rol>.from(json["roles"].map((model) => Rol.fromJson(model))),
       );
+
+  static List<User> fromJsonList(List<dynamic> jsonList) {
+    List<User> toList = [];
+
+    jsonList.forEach((item) {
+      User users = User.fromJson(item);
+      toList.add(users);
+    });
+
+    return toList;
+  }
 
   Map<String, dynamic> toJson() => {
         "id": id,

@@ -1,9 +1,10 @@
-import 'package:app_delivery/src/pages/login/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'login_controller.dart';
+
 class LoginPage extends StatelessWidget {
-  LoginController controller = Get.put(LoginController());
+  LoginController con = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -13,14 +14,13 @@ class LoginPage extends StatelessWidget {
         child: _textDontHaveAccount(),
       ),
       body: Stack(
+        // POSICIONAR ELEMENTOS UNO ENCIMA DEL OTRO
         children: [
           _backgroundCover(context),
           _boxForm(context),
           Column(
-            children: [
-              _imageCover(),
-              _textAppName(),
-            ],
+            // POSICIONAR ELEMENTOS UNO DEBAJO DEL OTRO (VERTICAL)
+            children: [_imageCover(), _textAppName()],
           ),
         ],
       ),
@@ -30,15 +30,14 @@ class LoginPage extends StatelessWidget {
   Widget _backgroundCover(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.45,
+      height: MediaQuery.of(context).size.height * 0.42,
       color: Colors.amber,
-      alignment: Alignment.topCenter,
     );
   }
 
   Widget _textAppName() {
-    return const Text(
-      'EcoTech',
+    return Text(
+      'DELIVERY MYSQL',
       style: TextStyle(
           fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
     );
@@ -48,22 +47,45 @@ class LoginPage extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height * 0.45,
       margin: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * 0.33, left: 50, right: 50),
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.black54, blurRadius: 15, offset: Offset(0, 0.75))
-          ]),
+          top: MediaQuery.of(context).size.height * 0.35, left: 50, right: 50),
+      decoration: BoxDecoration(color: Colors.white, boxShadow: <BoxShadow>[
+        BoxShadow(
+            color: Colors.black54, blurRadius: 15, offset: Offset(0, 0.75))
+      ]),
       child: SingleChildScrollView(
         child: Column(
           children: [
             _textYourInfo(),
             _textFieldEmail(),
             _textFieldPassword(),
-            _buttonLogin(),
+            _buttonLogin()
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _textFieldEmail() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 40),
+      child: TextField(
+        controller: con.emailController,
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+            hintText: 'Correo electronico', prefixIcon: Icon(Icons.email)),
+      ),
+    );
+  }
+
+  Widget _textFieldPassword() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 40),
+      child: TextField(
+        controller: con.passwordController,
+        keyboardType: TextInputType.text,
+        obscureText: true,
+        decoration: InputDecoration(
+            hintText: 'Contraseña', prefixIcon: Icon(Icons.lock)),
       ),
     );
   }
@@ -71,88 +93,63 @@ class LoginPage extends StatelessWidget {
   Widget _buttonLogin() {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
       child: ElevatedButton(
-          onPressed: () {
-            controller.login();
-          },
+          onPressed: () => con.login(),
           style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 15)),
-          child: const Text(
-            "LOGIN",
+              padding: EdgeInsets.symmetric(vertical: 15)),
+          child: Text(
+            'LOGIN',
             style: TextStyle(color: Colors.black),
           )),
     );
   }
 
-  Widget _textFieldEmail() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40),
-      child: TextField(
-        controller: controller.emailController,
-        keyboardType: TextInputType.emailAddress,
-        decoration: const InputDecoration(
-            hintText: 'Correo Electronico',
-            prefixIcon: Icon(Icons.email_outlined)),
-      ),
-    );
-  }
-
-  Widget _textFieldPassword() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40),
-      child: TextField(
-        controller: controller.passwordController,
-        keyboardType: TextInputType.text,
-        obscureText: true,
-        decoration: const InputDecoration(
-            hintText: 'Contraseña', prefixIcon: Icon(Icons.lock)),
-      ),
-    );
-  }
-
   Widget _textYourInfo() {
     return Container(
-        margin: const EdgeInsets.only(top: 40, bottom: 45),
-        child: const Text(
-          "INGRESA ESTA INFORMACIÓN",
-          style: TextStyle(color: Colors.black),
-        ));
+      margin: EdgeInsets.only(top: 40, bottom: 45),
+      child: Text(
+        'INGRESA ESTA INFORMACION',
+        style: TextStyle(
+          color: Colors.black,
+        ),
+      ),
+    );
   }
 
   Widget _textDontHaveAccount() {
     return Row(
+      // UBICAR ELEMENTOS UNO AL LADO DEL OTRO (HORIZONTAL)
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
-          "¿No tienes cuenta?",
+        Text(
+          '¿No tienes cuenta?',
           style: TextStyle(color: Colors.black, fontSize: 17),
         ),
-        const SizedBox(
-          width: 7,
-        ),
+        SizedBox(width: 7),
         GestureDetector(
-          onTap: () => controller.goToRegisterPage(),
-          child: const Text(
-            "Registrate Aqui",
+          onTap: () => con.goToRegisterPage(),
+          child: Text(
+            'Registrate Aqui',
             style: TextStyle(
                 color: Colors.amber, fontWeight: FontWeight.bold, fontSize: 17),
           ),
-        )
+        ),
       ],
     );
   }
 
+  // PRIVADO
   Widget _imageCover() {
     return SafeArea(
       child: Container(
-        margin: const EdgeInsets.only(top: 20, bottom: 15),
+        margin: EdgeInsets.only(top: 20, bottom: 15),
         alignment: Alignment.center,
-        // child: Image.asset(
-        //   'assets/img/delivery.png',
-        //   width: 130,
-        //   height: 130,
-        // ),
+        child: Image.asset(
+          'assets/img/delivery.png',
+          width: 130,
+          height: 130,
+        ),
       ),
     );
   }

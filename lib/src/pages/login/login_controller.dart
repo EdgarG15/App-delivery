@@ -1,12 +1,15 @@
-import 'package:app_delivery/src/models/response_api.dart';
-import 'package:app_delivery/src/providers/users_provider.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../../models/response_api.dart';
 import '../../models/user.dart';
+import '../../providers/users_provider.dart';
 
 class LoginController extends GetxController {
+  User user = User.fromJson(GetStorage().read('user') ?? {});
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -20,29 +23,34 @@ class LoginController extends GetxController {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
-    print('Email: ${email}');
-    print('Password: ${password}');
+    print('Email ${email}');
+    print('Password ${password}');
 
     if (isValidForm(email, password)) {
       ResponseApi responseApi = await usersProvider.login(email, password);
-      print("Response Api: ${responseApi.toJson()}");
+
+      print('Response Api: ${responseApi.toJson()}');
+
       if (responseApi.success == true) {
         GetStorage()
-            .write('user', responseApi.data); //Datos del usuario en sesión
-        //User user = User.fromJson(responseApi.data);
+            .write('user', responseApi.data); // DATOS DEL USUARIO EN SESION
         User myUser = User.fromJson(GetStorage().read('user') ?? {});
+
+        print('Roles length: ${myUser.roles!.length}');
+
         if (myUser.roles!.length > 1) {
           goToRolesPage();
         } else {
-          goToClientPage();
+          // SOLO UN ROL
+          goToClientHomePage();
         }
       } else {
-        Get.snackbar("Login Fallido", responseApi.message ?? '');
+        Get.snackbar('Login fallido', responseApi.message ?? '');
       }
     }
   }
 
-  void goToClientPage() {
+  void goToClientHomePage() {
     Get.offNamedUntil('/client/home', (route) => false);
   }
 
@@ -52,17 +60,17 @@ class LoginController extends GetxController {
 
   bool isValidForm(String email, String password) {
     if (email.isEmpty) {
-      Get.snackbar('Formulario no valido', 'Debes ingresar el correo');
+      Get.snackbar('Formulario no valido', 'Debes ingresar el email');
       return false;
     }
 
     if (!GetUtils.isEmail(email)) {
-      Get.snackbar('Formulario no valido', 'El correo no es valido');
+      Get.snackbar('Formulario no valido', 'El email no es valido');
       return false;
     }
 
     if (password.isEmpty) {
-      Get.snackbar('Formulario no valido', 'Debes ingresar la contraseña');
+      Get.snackbar('Formulario no valido', 'Debes ingresar el password');
       return false;
     }
 

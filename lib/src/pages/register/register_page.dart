@@ -3,21 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RegisterPage extends StatelessWidget {
-  registerController controller = Get.put(registerController());
+  RegisterController con = Get.put(RegisterController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
+        // POSICIONAR ELEMENTOS UNO ENCIMA DEL OTRO
         children: [
           _backgroundCover(context),
           _boxForm(context),
-          //_imageUser(context),
-          _buttomBack(),
-          Column(),
+          _imageUser(context),
+          _buttonBack()
         ],
       ),
     );
+  }
+
+  Widget _buttonBack() {
+    return SafeArea(
+        child: Container(
+      margin: EdgeInsets.only(left: 20),
+      child: IconButton(
+        onPressed: () => Get.back(),
+        icon: Icon(
+          Icons.arrow_back_ios,
+          color: Colors.white,
+          size: 30,
+        ),
+      ),
+    ));
   }
 
   Widget _backgroundCover(BuildContext context) {
@@ -25,7 +40,6 @@ class RegisterPage extends StatelessWidget {
       width: double.infinity,
       height: MediaQuery.of(context).size.height * 0.35,
       color: Colors.amber,
-      alignment: Alignment.topCenter,
     );
   }
 
@@ -34,12 +48,10 @@ class RegisterPage extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.65,
       margin: EdgeInsets.only(
           top: MediaQuery.of(context).size.height * 0.3, left: 50, right: 50),
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.black54, blurRadius: 15, offset: Offset(0, 0.75))
-          ]),
+      decoration: BoxDecoration(color: Colors.white, boxShadow: <BoxShadow>[
+        BoxShadow(
+            color: Colors.black54, blurRadius: 15, offset: Offset(0, 0.75))
+      ]),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -50,62 +62,44 @@ class RegisterPage extends StatelessWidget {
             _textFieldPhone(),
             _textFieldPassword(),
             _textFieldConfirmPassword(),
-            _buttonRegister(context),
+            _buttonRegister(context)
           ],
         ),
       ),
     );
   }
 
-  Widget _buttonRegister(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
-      child: ElevatedButton(
-          onPressed: () {
-            controller.register(context);
-          },
-          style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 15)),
-          child: const Text(
-            "REGISTRARSE",
-            style: TextStyle(color: Colors.black),
-          )),
-    );
-  }
-
   Widget _textFieldEmail() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40),
+      margin: EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
-        controller: controller.emailController,
+        controller: con.emailController,
         keyboardType: TextInputType.emailAddress,
-        decoration: const InputDecoration(
-            hintText: 'Correo Electronico',
-            prefixIcon: Icon(Icons.email_outlined)),
+        decoration: InputDecoration(
+            hintText: 'Correo electronico', prefixIcon: Icon(Icons.email)),
       ),
     );
   }
 
   Widget _textFieldName() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40),
+      margin: EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
-        controller: controller.nameController,
+        controller: con.nameController,
         keyboardType: TextInputType.text,
-        decoration: const InputDecoration(
-            hintText: 'Nombre', prefixIcon: Icon(Icons.person)),
+        decoration:
+            InputDecoration(hintText: 'Nombre', prefixIcon: Icon(Icons.person)),
       ),
     );
   }
 
   Widget _textFieldLastName() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40),
+      margin: EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
-        controller: controller.lastnameController,
+        controller: con.lastnameController,
         keyboardType: TextInputType.text,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
             hintText: 'Apellido', prefixIcon: Icon(Icons.person_outline)),
       ),
     );
@@ -113,11 +107,11 @@ class RegisterPage extends StatelessWidget {
 
   Widget _textFieldPhone() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40),
+      margin: EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
-        controller: controller.phoneController,
+        controller: con.phoneController,
         keyboardType: TextInputType.phone,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
             hintText: 'Telefono', prefixIcon: Icon(Icons.phone)),
       ),
     );
@@ -125,12 +119,12 @@ class RegisterPage extends StatelessWidget {
 
   Widget _textFieldPassword() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40),
+      margin: EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
-        controller: controller.passwordController,
+        controller: con.passwordController,
         keyboardType: TextInputType.text,
         obscureText: true,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
             hintText: 'Contraseña', prefixIcon: Icon(Icons.lock)),
       ),
     );
@@ -138,58 +132,61 @@ class RegisterPage extends StatelessWidget {
 
   Widget _textFieldConfirmPassword() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 40),
+      margin: EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
-        controller: controller.confirmPasswordController,
+        controller: con.confirmPasswordController,
         keyboardType: TextInputType.text,
         obscureText: true,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
             hintText: 'Confirmar Contraseña',
             prefixIcon: Icon(Icons.lock_outline)),
       ),
     );
   }
 
-  // Widget _imageUser(BuildContext context) {
-  //   return SafeArea(
-  //     child: Container(
-  //       alignment: Alignment.topCenter,
-  //       margin: const EdgeInsets.only(top: 30),
-  //       child: GestureDetector(
-  //           onTap: () => controller.showAlertDialog(context),
-  //           child: GetBuilder<registerController>(
-  //             builder: (value) => CircleAvatar(
-  //               backgroundImage: controller.imageFile != null
-  //                   ? FileImage(controller.imageFile!)
-  //                   : const AssetImage('assets/img/user.png') as ImageProvider,
-  //               radius: 60,
-  //               backgroundColor: Colors.white,
-  //             ),
-  //           )),
-  //     ),
-  //   );
-  // }
-
-  Widget _buttomBack() {
-    return SafeArea(
-        child: Container(
-      margin: const EdgeInsets.only(left: 15),
-      child: IconButton(
-          onPressed: () => Get.back(),
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-            size: 30,
+  Widget _buttonRegister(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+      child: ElevatedButton(
+          onPressed: () => con.register(context),
+          style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: 15)),
+          child: Text(
+            'REGISTRARSE',
+            style: TextStyle(color: Colors.black),
           )),
-    ));
+    );
+  }
+
+  Widget _imageUser(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        margin: EdgeInsets.only(top: 25),
+        alignment: Alignment.topCenter,
+        child: GestureDetector(
+            onTap: () => con.showAlertDialog(context),
+            child: GetBuilder<RegisterController>(
+              builder: (value) => CircleAvatar(
+                backgroundImage: con.imageFile != null
+                    ? FileImage(con.imageFile!)
+                    : AssetImage('assets/img/user.png') as ImageProvider,
+                radius: 60,
+                backgroundColor: Colors.white,
+              ),
+            )),
+      ),
+    );
   }
 
   Widget _textYourInfo() {
     return Container(
-      margin: const EdgeInsets.only(top: 40, bottom: 30),
-      child: const Text(
-        "INGRESA ESTA INFORMACIÓN",
-        style: TextStyle(color: Colors.black),
+      margin: EdgeInsets.only(top: 40, bottom: 30),
+      child: Text(
+        'INGRESA ESTA INFORMACION',
+        style: TextStyle(
+          color: Colors.black,
+        ),
       ),
     );
   }
