@@ -1,14 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:app_delivery/src/environment/environment.dart';
+import 'package:app_delivery/src/models/response_api.dart';
+import 'package:app_delivery/src/models/user.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:path/path.dart';
 import 'package:get/get.dart';
-
 import 'package:http/http.dart' as http;
-
-import '../environment/environment.dart';
-import '../models/response_api.dart';
-import '../models/user.dart';
 
 class UsersProvider extends GetConnect {
   String url = Environment.API_URL + 'api/users';

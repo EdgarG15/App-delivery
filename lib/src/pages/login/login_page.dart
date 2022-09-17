@@ -1,7 +1,6 @@
+import 'package:app_delivery/src/pages/login/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'login_controller.dart';
 
 class LoginPage extends StatelessWidget {
   LoginController con = Get.put(LoginController());
