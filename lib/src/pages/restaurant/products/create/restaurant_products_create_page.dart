@@ -155,7 +155,7 @@ class RestaurantProductsCreateePage extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 50),
       child: ElevatedButton(
           onPressed: () {
-            controller.createCategory();
+            controller.createProduct(context);
           },
           style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 15)),

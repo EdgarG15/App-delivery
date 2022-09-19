@@ -1,12 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_delivery/src/models/category.dart';
+import 'package:app_delivery/src/models/product.dart';
 import 'package:app_delivery/src/models/response_api.dart';
 import 'package:app_delivery/src/providers/categories_provider.dart';
+import 'package:app_delivery/src/providers/products_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
 class RestaurantProductsCreateController extends GetxController {
   TextEditingController nameController = TextEditingController();
@@ -22,6 +26,7 @@ class RestaurantProductsCreateController extends GetxController {
 
   var idCategory = ''.obs;
   List<Category> categories = <Category>[].obs;
+  ProductsProvider productsProvider = ProductsProvider();
 
   RestaurantProductsCreateController() {
     getCategories();
@@ -33,22 +38,75 @@ class RestaurantProductsCreateController extends GetxController {
     categories.addAll(result);
   }
 
-  void createCategory() async {
+  void createProduct(BuildContext context) async {
     String name = nameController.text;
     String description = descriptionController.text;
+    String price = priceController.text;
     print('name: $name');
     print('description $description');
+    print('price ${price}');
+    print('id catgory ${idCategory}}');
+    ProgressDialog progressDialog = ProgressDialog(context: context);
 
-    if (name.isNotEmpty && description.isNotEmpty) {
-      Category category = Category(name: name, description: description);
-      ResponseApi responseApi = await categoriesProvider.create(category);
-      Get.snackbar('Formulario valido', responseApi.message ?? '');
-      if (responseApi.success == true) {
-        clearForm();
-      }
-    } else {
-      Get.snackbar('Formulario no valido', 'Ingresa todos los datos');
+    if (isValidForm(name, description, price)) {
+      Product product = Product(
+          name: name,
+          description: description,
+          price: double.parse(price),
+          idCategory: idCategory.value);
+      progressDialog.show(max: 100, msg: 'espere un momento....');
+      List<File> images = [];
+      images.add(imageFile1!);
+      images.add(imageFile2!);
+      images.add(imageFile3!);
+      Stream stream = await productsProvider.create(product, images);
+      stream.listen((res) {
+        progressDialog.close();
+        ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
+        if (responseApi.success == true) {
+          clearForm();
+        }
+        Get.snackbar('Proceso terminado', responseApi.message ?? '');
+      });
     }
+  }
+
+  bool isValidForm(String name, String description, String price) {
+    if (name.isEmpty) {
+      Get.snackbar("formulario no valido", "Ingresa el nombre del producto");
+      return false;
+    }
+    if (description.isEmpty) {
+      Get.snackbar(
+          "formulario no valido", "Ingresa la descripcion del producto");
+      return false;
+    }
+    if (price.isEmpty) {
+      Get.snackbar("formulario no valido", "Ingresa el precio del producto");
+      return false;
+    }
+    if (idCategory.value == '') {
+      Get.snackbar("formulario no valido",
+          "Debes seleccionar la categoria del producto del producto");
+      return false;
+    }
+    if (imageFile1 == null) {
+      Get.snackbar("formulario no valido",
+          "Selecciona la imagen 1 del producto del producto");
+      return false;
+    }
+    if (imageFile2 == null) {
+      Get.snackbar("formulario no valido",
+          "Selecciona la imagen 2 del producto del producto");
+      return false;
+    }
+    if (imageFile3 == null) {
+      Get.snackbar("formulario no valido",
+          "Selecciona la imagen 3 del producto del producto");
+      return false;
+    }
+
+    return true;
   }
 
   Future selectImage(ImageSource imageSource, int numberFile) async {
@@ -100,5 +158,11 @@ class RestaurantProductsCreateController extends GetxController {
   void clearForm() {
     nameController.text = '';
     descriptionController.text = '';
+    priceController.text = '';
+    imageFile1 = null;
+    imageFile2 = null;
+    imageFile3 = null;
+    idCategory.value = '';
+    update();
   }
 }
