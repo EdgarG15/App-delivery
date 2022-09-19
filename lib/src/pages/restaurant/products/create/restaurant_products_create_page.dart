@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app_delivery/src/pages/restaurant/categories/create/restaurant_categories_create_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../models/category.dart';
 import 'restaurant_products_create_controller.dart';
 
 class RestaurantProductsCreateePage extends StatelessWidget {
@@ -12,13 +13,15 @@ class RestaurantProductsCreateePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          _backgroundCover(context),
-          _textNewProduct(context),
-          _boxForm(context),
-          Column(),
-        ],
+      body: Obx(
+        () => Stack(
+          children: [
+            _backgroundCover(context),
+            _textNewProduct(context),
+            _boxForm(context),
+            Column(),
+          ],
+        ),
       ),
     );
   }
@@ -50,8 +53,9 @@ class RestaurantProductsCreateePage extends StatelessWidget {
             _textFieldName(),
             _textFieldPrice(),
             _textFieldDescription(),
+            _dropDownCategories(controller.categories),
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: EdgeInsets.only(top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -79,22 +83,68 @@ class RestaurantProductsCreateePage extends StatelessWidget {
     );
   }
 
+  Widget _dropDownCategories(List<Category> categories) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 50),
+      margin: EdgeInsets.only(top: 15),
+      child: DropdownButton(
+        underline: Container(
+          alignment: Alignment.centerRight,
+          child: Icon(
+            Icons.arrow_drop_down_circle,
+            color: Colors.amber,
+          ),
+        ),
+        elevation: 3,
+        isExpanded: true,
+        hint: Text(
+          'Seleccionar categoria',
+          style: TextStyle(fontSize: 15),
+        ),
+        items: _dropDownItems(categories),
+        value: controller.idCategory.value == ''
+            ? null
+            : controller.idCategory.value,
+        onChanged: (option) {
+          print('Opcion seleccionada ${option}');
+          controller.idCategory.value = option.toString();
+        },
+      ),
+    );
+  }
+
+  List<DropdownMenuItem<String>> _dropDownItems(List<Category> categories) {
+    List<DropdownMenuItem<String>> list = [];
+    categories.forEach((category) {
+      list.add(DropdownMenuItem(
+        child: Text(category.name ?? ''),
+        value: category.id,
+      ));
+    });
+
+    return list;
+  }
+
   Widget _cardImage(BuildContext context, File? imageFile, int numberFile) {
     return GestureDetector(
       onTap: () {
         controller.showAlertDialog(context, numberFile);
       },
-      child: Container(
-        height: 70,
-        width: MediaQuery.of(context).size.width * 0.18,
-        child: imageFile != null
-            ? Image.file(
-                imageFile,
-                fit: BoxFit.cover,
-              )
-            : Image(
-                image: AssetImage('assets/img/images.png'),
-              ),
+      child: Card(
+        elevation: 3,
+        child: Container(
+          padding: EdgeInsets.all(10),
+          height: 70,
+          width: MediaQuery.of(context).size.width * 0.18,
+          child: imageFile != null
+              ? Image.file(
+                  imageFile,
+                  fit: BoxFit.cover,
+                )
+              : Image(
+                  image: AssetImage('assets/img/images.png'),
+                ),
+        ),
       ),
     );
   }
