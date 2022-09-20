@@ -41,7 +41,8 @@ class ClientProductsListPage extends StatelessWidget {
                           return ListView.builder(
                               itemCount: snapshot.data?.length ?? 0,
                               itemBuilder: (_, index) {
-                                return _cardProduct(snapshot.data![index]);
+                                return _cardProduct(
+                                    context, snapshot.data![index]);
                               });
                         } else {
                           return NoDataWidget(
@@ -62,61 +63,65 @@ class ClientProductsListPage extends StatelessWidget {
     );
   }
 
-  Widget _cardProduct(Product product) {
-    return Column(
-      children: [
-        Container(
-          margin: EdgeInsets.only(top: 15, left: 10, right: 10),
-          child: ListTile(
-            title: Text(product.name ?? ''),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  product.description ?? '',
-                  maxLines: 2,
-                  style: TextStyle(fontSize: 12),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  '\$${product.price.toString()}',
-                  style: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-              ],
-            ),
-            trailing: Container(
-              height: 70,
-              width: 70,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: FadeInImage(
-                  image: product.image1 != null
-                      ? NetworkImage(product.image1!)
-                      : AssetImage('assets/img/no_image.jpg') as ImageProvider,
-                  fit: BoxFit.cover,
-                  fadeInDuration: Duration(milliseconds: 50),
-                  placeholder: AssetImage('assets/img/no_image.jpg'),
+  Widget _cardProduct(BuildContext context, Product product) {
+    return GestureDetector(
+      onTap: () => con.openBottomSheet(context, product),
+      child: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 15, left: 10, right: 10),
+            child: ListTile(
+              title: Text(product.name ?? ''),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    product.description ?? '',
+                    maxLines: 2,
+                    style: TextStyle(fontSize: 12),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    '\$${product.price.toString()}',
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                ],
+              ),
+              trailing: Container(
+                height: 70,
+                width: 70,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: FadeInImage(
+                    image: product.image1 != null
+                        ? NetworkImage(product.image1!)
+                        : AssetImage('assets/img/no_image.jpg')
+                            as ImageProvider,
+                    fit: BoxFit.cover,
+                    fadeInDuration: Duration(milliseconds: 50),
+                    placeholder: AssetImage('assets/img/no_image.jpg'),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        const Divider(
-          height: 1,
-          color: Colors.grey,
-          indent: 37,
-          endIndent: 37,
-        )
-      ],
+          const Divider(
+            height: 1,
+            color: Colors.grey,
+            indent: 37,
+            endIndent: 37,
+          )
+        ],
+      ),
     );
   }
 }
