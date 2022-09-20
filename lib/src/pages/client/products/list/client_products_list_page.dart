@@ -1,6 +1,7 @@
 import 'package:app_delivery/src/models/category.dart';
 import 'package:app_delivery/src/models/product.dart';
 import 'package:app_delivery/src/pages/client/profile/info/client_profile_info_page.dart';
+import 'package:app_delivery/src/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'client_product_list_controller.dart';
@@ -36,13 +37,21 @@ class ClientProductsListPage extends StatelessWidget {
                     future: con.getProducts(category.id ?? '1'),
                     builder: (context, AsyncSnapshot<List<Product>> snapshot) {
                       if (snapshot.hasData) {
-                        return ListView.builder(
-                            itemCount: snapshot.data?.length ?? 0,
-                            itemBuilder: (_, index) {
-                              return _cardProduct(snapshot.data![index]);
-                            });
+                        if (snapshot.data!.length > 0) {
+                          return ListView.builder(
+                              itemCount: snapshot.data?.length ?? 0,
+                              itemBuilder: (_, index) {
+                                return _cardProduct(snapshot.data![index]);
+                              });
+                        } else {
+                          return NoDataWidget(
+                            text: 'No hay productos disponibles',
+                          );
+                        }
                       } else {
-                        return Container();
+                        return NoDataWidget(
+                          text: 'No hay productos disponibles',
+                        );
                       }
                     });
               }).toList(),
@@ -54,40 +63,60 @@ class ClientProductsListPage extends StatelessWidget {
   }
 
   Widget _cardProduct(Product product) {
-    return Container(
-      margin: EdgeInsets.only(top: 15, left: 10, right: 10),
-      child: ListTile(
-        title: Text(product.name ?? ''),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 5,
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 15, left: 10, right: 10),
+          child: ListTile(
+            title: Text(product.name ?? ''),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  product.description ?? '',
+                  maxLines: 2,
+                  style: TextStyle(fontSize: 12),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  '\$${product.price.toString()}',
+                  style: const TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+              ],
             ),
-            Text(product.description ?? ''),
-            SizedBox(
-              height: 10,
+            trailing: Container(
+              height: 70,
+              width: 70,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: FadeInImage(
+                  image: product.image1 != null
+                      ? NetworkImage(product.image1!)
+                      : AssetImage('assets/img/no_image.jpg') as ImageProvider,
+                  fit: BoxFit.cover,
+                  fadeInDuration: Duration(milliseconds: 50),
+                  placeholder: AssetImage('assets/img/no_image.jpg'),
+                ),
+              ),
             ),
-            Text(
-              product.price.toString(),
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-            )
-          ],
-        ),
-        trailing: Container(
-          height: 70,
-          width: 70,
-          child: FadeInImage(
-            image: product.image1 != null
-                ? NetworkImage(product.image1!)
-                : AssetImage('assets/img/no_image.jpg') as ImageProvider,
-            fit: BoxFit.cover,
-            fadeInDuration: Duration(milliseconds: 50),
-            placeholder: AssetImage('assets/img/no_image.jpg'),
           ),
         ),
-      ),
+        const Divider(
+          height: 1,
+          color: Colors.grey,
+          indent: 37,
+          endIndent: 37,
+        )
+      ],
     );
   }
 }
