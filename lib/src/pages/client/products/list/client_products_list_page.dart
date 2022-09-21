@@ -34,7 +34,8 @@ class ClientProductsListPage extends StatelessWidget {
             child: TabBarView(
               children: con.categories.map((Category category) {
                 return FutureBuilder(
-                    future: con.getProducts(category.id ?? '1'),
+                    future: con.getProducts(
+                        category.id ?? '1', con.productName.value),
                     builder: (context, AsyncSnapshot<List<Product>> snapshot) {
                       if (snapshot.hasData) {
                         if (snapshot.data!.length > 0) {

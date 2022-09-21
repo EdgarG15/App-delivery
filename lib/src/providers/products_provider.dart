@@ -1,20 +1,41 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:app_delivery/src/models/product.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import '../environment/environment.dart';
-import '../models/user.dart';
 import 'package:path/path.dart';
+
+import '../environment/environment.dart';
+import '../models/product.dart';
+import '../models/user.dart';
 
 class ProductsProvider extends GetConnect {
   String url = Environment.API_URL + 'api/products';
+
   User userSession = User.fromJson(GetStorage().read('user') ?? {});
 
   Future<List<Product>> findByCategory(String idCategory) async {
     Response response = await get('$url/findByCategory/$idCategory', headers: {
+      'Content-Type': 'application/json',
+      'Authorization': userSession.sessionToken ?? ''
+    }); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
+
+    if (response.statusCode == 401) {
+      Get.snackbar('Peticion denegada',
+          'Tu usuario no tiene permitido leer esta informacion');
+      return [];
+    }
+
+    List<Product> products = Product.fromJsonList(response.body);
+
+    return products;
+  }
+
+  Future<List<Product>> findByNameAndCategory(
+      String idCategory, String name) async {
+    Response response =
+        await get('$url/findByNameAndCategory/$idCategory/$name', headers: {
       'Content-Type': 'application/json',
       'Authorization': userSession.sessionToken ?? ''
     }); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA

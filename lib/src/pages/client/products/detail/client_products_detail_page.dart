@@ -6,23 +6,31 @@ import 'package:get/get.dart';
 
 class ClientProductsDetailPage extends StatelessWidget {
   Product? product;
-  ClientProductDetailController con = Get.put(ClientProductDetailController());
+  late ClientProductsDetailController con;
+  var counter = 0.obs;
+  var price = 0.0.obs;
 
-  ClientProductsDetailPage({@required this.product});
+  ClientProductsDetailPage({@required this.product}) {
+    con = Get.put(ClientProductsDetailController());
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: Container(height: 100, child: _buttonsAddToBag()),
-      body: Column(
-        children: [
-          _imageSlideShow(context),
-          _textNameProduct(),
-          _textDescriptionProduct(),
-          _textPriceProduct(),
-        ],
-      ),
-    );
+    con.checkIfProductsWasAdded(product!, price, counter);
+    return Obx(() => Scaffold(
+          bottomNavigationBar: Container(
+              color: const Color.fromRGBO(245, 245, 245, 1.0),
+              height: 100,
+              child: _buttonsAddToBag()),
+          body: Column(
+            children: [
+              _imageSlideshow(context),
+              _textNameProduct(),
+              _textDescriptionProduct(),
+              _textPriceProduct()
+            ],
+          ),
+        ));
   }
 
   Widget _textNameProduct() {
@@ -40,22 +48,12 @@ class ClientProductsDetailPage extends StatelessWidget {
   Widget _textDescriptionProduct() {
     return Container(
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(top: 20, left: 30, right: 30),
+      margin: EdgeInsets.only(top: 30, left: 30, right: 30),
       child: Text(
         product?.description ?? '',
-        style: TextStyle(fontSize: 16),
-      ),
-    );
-  }
-
-  Widget _textPriceProduct() {
-    return Container(
-      alignment: Alignment.centerLeft,
-      margin: EdgeInsets.only(top: 10, left: 30, right: 30),
-      child: Text(
-        '\$${product?.price.toString() ?? ''}',
         style: TextStyle(
-            fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
+          fontSize: 16,
+        ),
       ),
     );
   }
@@ -63,101 +61,117 @@ class ClientProductsDetailPage extends StatelessWidget {
   Widget _buttonsAddToBag() {
     return Column(
       children: [
-        Divider(
-          height: 1,
-          color: Colors.grey[400],
-        ),
+        Divider(height: 1, color: Colors.grey[400]),
         Container(
-          margin: EdgeInsets.only(left: 20, right: 20, top: 15),
+          margin: EdgeInsets.only(left: 20, right: 20, top: 25),
           child: Row(
             children: [
               ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    minimumSize: const Size(45, 37),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25),
-                            bottomLeft: Radius.circular(25)))),
-                child: const Text(
+                onPressed: () => con.removeItem(product!, price, counter),
+                child: Text(
                   '-',
                   style: TextStyle(color: Colors.black, fontSize: 22),
                 ),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                    minimumSize: Size(45, 37),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25),
+                      bottomLeft: Radius.circular(25),
+                    ))),
               ),
               ElevatedButton(
                 onPressed: () {},
+                child: Text(
+                  '${counter.value}',
+                  style: TextStyle(color: Colors.black, fontSize: 18),
+                ),
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    minimumSize: const Size(40, 37)),
-                child: const Text(
-                  '0',
-                  style: TextStyle(color: Colors.black, fontSize: 22),
+                  primary: Colors.white,
+                  minimumSize: Size(40, 37),
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    minimumSize: const Size(45, 37),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(25),
-                            bottomRight: Radius.circular(25)))),
-                child: const Text(
+                onPressed: () => con.addItem(product!, price, counter),
+                child: Text(
                   '+',
                   style: TextStyle(color: Colors.black, fontSize: 22),
                 ),
-              ),
-              const Spacer(),
-              ElevatedButton(
-                onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.amber,
+                    primary: Colors.white,
+                    minimumSize: Size(45, 37),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25))),
+                        borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(25),
+                      bottomRight: Radius.circular(25),
+                    ))),
+              ),
+              Spacer(),
+              ElevatedButton(
+                onPressed: () => con.addToBag(product!, price, counter),
                 child: Text(
-                  'Agregar ${product?.price ?? ''}',
-                  style: const TextStyle(color: Colors.black, fontSize: 22),
+                  'Agregar   \$${price.value}',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
+                ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.amber,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
                 ),
               ),
             ],
           ),
-        ),
+        )
       ],
     );
   }
 
-  Widget _imageSlideShow(BuildContext context) {
-    return ImageSlideshow(
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.4,
-      initialPage: 0,
-      indicatorColor: Colors.amber,
-      indicatorBackgroundColor: Colors.grey,
-      children: [
-        FadeInImage(
-            fit: BoxFit.cover,
-            fadeInDuration: Duration(milliseconds: 50),
-            placeholder: AssetImage('assets/img/no_image.jpg'),
-            image: product!.image1 != null
-                ? NetworkImage(product!.image1!)
-                : AssetImage('assets/img/no_image.jpg') as ImageProvider),
-        FadeInImage(
-            fit: BoxFit.cover,
-            fadeInDuration: Duration(milliseconds: 50),
-            placeholder: AssetImage('assets/img/no_image.jpg'),
-            image: product!.image2 != null
-                ? NetworkImage(product!.image2!)
-                : AssetImage('assets/img/no_image.jpg') as ImageProvider),
-        FadeInImage(
-            fit: BoxFit.cover,
-            fadeInDuration: Duration(milliseconds: 50),
-            placeholder: AssetImage('assets/img/no_image.jpg'),
-            image: product!.image3 != null
-                ? NetworkImage(product!.image3!)
-                : AssetImage('assets/img/no_image.jpg') as ImageProvider),
-      ],
+  Widget _textPriceProduct() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.only(top: 15, left: 30, right: 30),
+      child: Text(
+        '\$${product?.price.toString() ?? ''}',
+        style: TextStyle(
+            fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
+      ),
     );
+  }
+
+  Widget _imageSlideshow(BuildContext context) {
+    return ImageSlideshow(
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.4,
+        initialPage: 0,
+        indicatorColor: Colors.amber,
+        indicatorBackgroundColor: Colors.grey,
+        children: [
+          FadeInImage(
+              fit: BoxFit.cover,
+              fadeInDuration: Duration(milliseconds: 50),
+              placeholder: AssetImage('assets/img/no-image.png'),
+              image: product!.image1 != null
+                  ? NetworkImage(product!.image1!)
+                  : AssetImage('assets/img/no-image.png') as ImageProvider),
+          FadeInImage(
+              fit: BoxFit.cover,
+              fadeInDuration: Duration(milliseconds: 50),
+              placeholder: AssetImage('assets/img/no-image.png'),
+              image: product!.image2 != null
+                  ? NetworkImage(product!.image2!)
+                  : AssetImage('assets/img/no-image.png') as ImageProvider),
+          FadeInImage(
+              fit: BoxFit.cover,
+              fadeInDuration: Duration(milliseconds: 50),
+              placeholder: AssetImage('assets/img/no-image.png'),
+              image: product!.image3 != null
+                  ? NetworkImage(product!.image3!)
+                  : AssetImage('assets/img/no-image.png') as ImageProvider),
+        ]);
   }
 }
