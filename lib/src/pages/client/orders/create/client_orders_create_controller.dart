@@ -6,10 +6,8 @@ import '../../../../models/product.dart';
 class ClientOrdersCreateController extends GetxController {
   List<Product> selectedProducts = [];
   var counter = 0.0.obs;
-  Product product = Product();
 
   ClientOrdersCreateController() {
-    print('Productos: ${product.toJson()}');
     if (GetStorage().read('shopping_bag') != null) {
       if (GetStorage().read('shopping_bag') is List<Product>) {
         selectedProducts = GetStorage().read('shopping_bag');
