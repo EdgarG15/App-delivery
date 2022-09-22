@@ -15,6 +15,8 @@ class ClientProductsListController extends GetxController {
   CategoriesProvider categoriesProvider = CategoriesProvider();
   ProductsProvider productsProvider = ProductsProvider();
 
+  Product product = Product();
+
   List<Product> selectedProducts = [];
 
   List<Category> categories = <Category>[].obs;
