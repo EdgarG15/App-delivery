@@ -73,7 +73,7 @@ class ClientProductsDetailPage extends StatelessWidget {
                   style: TextStyle(color: Colors.black, fontSize: 22),
                 ),
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
+                    backgroundColor: Colors.white,
                     minimumSize: Size(45, 37),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
@@ -99,7 +99,7 @@ class ClientProductsDetailPage extends StatelessWidget {
                   style: TextStyle(color: Colors.black, fontSize: 22),
                 ),
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
+                    backgroundColor: Colors.white,
                     minimumSize: Size(45, 37),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
@@ -154,24 +154,24 @@ class ClientProductsDetailPage extends StatelessWidget {
           FadeInImage(
               fit: BoxFit.cover,
               fadeInDuration: Duration(milliseconds: 50),
-              placeholder: AssetImage('assets/img/no-image.png'),
+              placeholder: AssetImage('assets/img/no_image.jpg'),
               image: product!.image1 != null
                   ? NetworkImage(product!.image1!)
-                  : AssetImage('assets/img/no-image.png') as ImageProvider),
+                  : AssetImage('assets/img/no_image.jpg') as ImageProvider),
           FadeInImage(
               fit: BoxFit.cover,
               fadeInDuration: Duration(milliseconds: 50),
-              placeholder: AssetImage('assets/img/no-image.png'),
+              placeholder: AssetImage('assets/img/no_image.jpg'),
               image: product!.image2 != null
                   ? NetworkImage(product!.image2!)
-                  : AssetImage('assets/img/no-image.png') as ImageProvider),
+                  : AssetImage('assets/img/no_image.jpg') as ImageProvider),
           FadeInImage(
               fit: BoxFit.cover,
               fadeInDuration: Duration(milliseconds: 50),
-              placeholder: AssetImage('assets/img/no-image.png'),
+              placeholder: AssetImage('assets/img/no_image.jpg'),
               image: product!.image3 != null
                   ? NetworkImage(product!.image3!)
-                  : AssetImage('assets/img/no-image.png') as ImageProvider),
+                  : AssetImage('assets/img/no_image.jpg') as ImageProvider),
         ]);
   }
 }
