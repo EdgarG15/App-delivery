@@ -51,7 +51,7 @@ class ClientOrdersCreatePage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 30),
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => con.goToAddressList(),
                     style:
                         ElevatedButton.styleFrom(padding: EdgeInsets.all(15)),
                     child: Text(

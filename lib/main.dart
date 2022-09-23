@@ -1,3 +1,5 @@
+import 'package:app_delivery/src/pages/client/address/create/client_address_create_page.dart';
+import 'package:app_delivery/src/pages/client/address/list/client_address_list_page.dart';
 import 'package:app_delivery/src/pages/client/home/client_home_page.dart';
 import 'package:app_delivery/src/pages/client/orders/create/client_orders_create_page.dart';
 import 'package:app_delivery/src/pages/client/products/list/client_products_list_page.dart';
@@ -71,6 +73,11 @@ class _MyAppState extends State<MyApp> {
         GetPage(
             name: '/client/orders/create',
             page: () => ClientOrdersCreatePage()),
+        GetPage(
+            name: '/client/addres/create',
+            page: () => ClientAddresCreatePage()),
+        GetPage(
+            name: '/client/address/list', page: () => ClientAddresListPage()),
       ],
       theme: ThemeData(
           primaryColor: Colors.amber,
