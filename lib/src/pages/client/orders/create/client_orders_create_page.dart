@@ -28,7 +28,10 @@ class ClientOrdersCreatePage extends StatelessWidget {
                     return _cardProduct(product);
                   }).toList(),
                 )
-              : NoDataWidget()),
+              : Center(
+                  child: NoDataWidget(
+                  text: 'No hay productos',
+                ))),
     );
   }
 
@@ -45,7 +48,7 @@ class ClientOrdersCreatePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Total: \$0.0',
+                'TOTAL: \$${con.total.value}',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               Container(
