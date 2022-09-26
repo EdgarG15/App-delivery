@@ -32,9 +32,9 @@ class ClientAddresCreatePage extends StatelessWidget {
 
   Widget _boxForm(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.45,
+      height: MediaQuery.of(context).size.height * 0.55,
       margin: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * 0.25, left: 50, right: 50),
+          top: MediaQuery.of(context).size.height * 0.28, left: 50, right: 50),
       decoration: const BoxDecoration(
           color: Colors.white,
           boxShadow: <BoxShadow>[
@@ -47,7 +47,7 @@ class ClientAddresCreatePage extends StatelessWidget {
             _textYourInfo(),
             _textFieldAddres(),
             _textFieldColonia(),
-            _textFieldReferencia(),
+            _textFieldReferencia(context),
             const SizedBox(
               height: 10,
             ),
@@ -125,11 +125,14 @@ class ClientAddresCreatePage extends StatelessWidget {
     );
   }
 
-  Widget _textFieldReferencia() {
+  Widget _textFieldReferencia(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
+        onTap: () => controller.openGoogleMaps(context),
         controller: controller.addressController,
+        autofocus: false,
+        focusNode: AlwaysDisabledFocusNode(),
         keyboardType: TextInputType.text,
         decoration: const InputDecoration(
             hintText: 'Punto de referencia',
@@ -147,4 +150,9 @@ class ClientAddresCreatePage extends StatelessWidget {
       ),
     );
   }
+}
+
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
 }
