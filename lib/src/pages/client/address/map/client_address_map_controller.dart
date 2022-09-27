@@ -14,11 +14,10 @@ class ClientAddresMapController extends GetxController {
   var addressName = ''.obs;
 
   Completer<GoogleMapController> mapController = Completer();
-
   Position? position;
 
-  ClientAddresMapController() {
-    checkGPS(); //verificar si el GPS esta activo
+  ClientAddressMapController() {
+    checkGPS(); // VERIFICAR SI EL GPS ESTA ACTIVO
   }
 
   Future setLocationDraggableInfo() async {
@@ -33,8 +32,21 @@ class ClientAddresMapController extends GetxController {
       String city = address[0].locality ?? '';
       String department = address[0].administrativeArea ?? '';
       String country = address[0].country ?? '';
-      addressName.value = '$direction #$street, $city, $department, $country';
+      addressName.value = '$direction #$street, $city, $department';
       addressLatLng = LatLng(lat, lng);
+      print(
+          'LAT Y LNG: ${addressLatLng?.latitude ?? 0} ${addressLatLng?.longitude ?? 0}');
+    }
+  }
+
+  void selectRefPoint(BuildContext context) {
+    if (addressLatLng != null) {
+      Map<String, dynamic> data = {
+        'address': addressName.value,
+        'lat': addressLatLng!.latitude,
+        'lng': addressLatLng!.longitude,
+      };
+      Navigator.pop(context, data);
     }
   }
 
@@ -54,21 +66,18 @@ class ClientAddresMapController extends GetxController {
   void updateLocation() async {
     try {
       await _determinePosition();
-      position = await Geolocator
-          .getLastKnownPosition(); //Latitud y longitud de nuestra posicion actual
-      animatedCameraPosition(position!.latitude, position!.longitude);
+      position = await Geolocator.getLastKnownPosition(); // LAT Y LNG (ACTUAL)
+      animateCameraPosition(
+          position?.latitude ?? 1.2004567, position?.longitude ?? -77.2787444);
     } catch (e) {
-      print('error: ${e}');
+      print('Error: ${e}');
     }
   }
 
-  Future animatedCameraPosition(double lat, double lng) async {
+  Future animateCameraPosition(double lat, double lng) async {
     GoogleMapController controller = await mapController.future;
-    controller.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(target: LatLng(lat, lng), zoom: 13, bearing: 0),
-      ),
-    );
+    controller.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(lat, lng), zoom: 13, bearing: 0)));
   }
 
   Future<Position> _determinePosition() async {

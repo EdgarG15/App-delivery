@@ -8,12 +8,15 @@ class ClientAddressCreateController extends GetxController {
   TextEditingController neighborhoodController = TextEditingController();
   TextEditingController refPointController = TextEditingController();
 
-  void openGoogleMaps(BuildContext context) {
-    showMaterialModalBottomSheet(
+  void openGoogleMaps(BuildContext context) async {
+    Map<String, dynamic> refPointMap = await showMaterialModalBottomSheet(
       isDismissible: false,
       enableDrag: false,
       context: context,
       builder: (context) => ClientAddressMapPage(),
     );
+
+    refPointController.text = refPointMap['address'];
+    print('Ref point Map ${refPointMap}');
   }
 }

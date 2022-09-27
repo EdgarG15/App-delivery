@@ -21,22 +21,22 @@ class ClientAddressMapPage extends StatelessWidget {
             _googleMaps(),
             _iconMyLocation(),
             _cardAddress(),
-            _buttonAccept(),
+            _buttonAccept(context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buttonAccept() {
+  Widget _buttonAccept(BuildContext context) {
     return Container(
       alignment: Alignment.bottomCenter,
-      padding: EdgeInsets.only(bottom: 30),
       width: double.infinity,
+      margin: EdgeInsets.only(bottom: 30),
       child: ElevatedButton(
-        onPressed: () {},
-        child: const Text(
-          'Seleccionar punto',
+        onPressed: () => con.selectRefPoint(context),
+        child: Text(
+          'SELECCIONAR ESTE PUNTO',
           style: TextStyle(color: Colors.black),
         ),
         style: ElevatedButton.styleFrom(
