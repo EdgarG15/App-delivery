@@ -85,7 +85,7 @@ class ClientAddresCreatePage extends StatelessWidget {
         controller: con.neighborhoodController,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-            hintText: 'Barrio', prefixIcon: Icon(Icons.location_city)),
+            hintText: 'Colonia', prefixIcon: Icon(Icons.location_city)),
       ),
     );
   }
