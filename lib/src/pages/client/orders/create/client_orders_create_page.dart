@@ -160,10 +160,10 @@ class ClientOrdersCreatePage extends StatelessWidget {
         child: FadeInImage(
           image: product.image1 != null
               ? NetworkImage(product.image1!)
-              : AssetImage('assets/img/no-image.png') as ImageProvider,
+              : AssetImage('assets/img/no_image.jpg') as ImageProvider,
           fit: BoxFit.cover,
           fadeInDuration: Duration(milliseconds: 50),
-          placeholder: AssetImage('assets/img/no-image.png'),
+          placeholder: AssetImage('assets/img/no_image.jpg'),
         ),
       ),
     );

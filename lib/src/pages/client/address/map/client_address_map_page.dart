@@ -7,25 +7,23 @@ class ClientAddressMapPage extends StatelessWidget {
   ClientAddresMapController con = Get.put(ClientAddresMapController());
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.black),
-          title: const Text(
-            'Selecciona la ubicacion',
-            style: TextStyle(color: Colors.black),
+    return Obx(() => Scaffold(
+          appBar: AppBar(
+            iconTheme: IconThemeData(color: Colors.black),
+            title: Text(
+              'Ubica tu direccion en el mapa',
+              style: TextStyle(color: Colors.black),
+            ),
           ),
-        ),
-        body: Stack(
-          children: [
-            _googleMaps(),
-            _iconMyLocation(),
-            _cardAddress(),
-            _buttonAccept(context),
-          ],
-        ),
-      ),
-    );
+          body: Stack(
+            children: [
+              _googleMaps(),
+              _iconMyLocation(),
+              _cardAddress(),
+              _buttonAccept(context)
+            ],
+          ),
+        ));
   }
 
   Widget _buttonAccept(BuildContext context) {
@@ -49,9 +47,9 @@ class ClientAddressMapPage extends StatelessWidget {
 
   Widget _cardAddress() {
     return Container(
-      alignment: Alignment.topCenter,
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: 30),
+      alignment: Alignment.topCenter,
+      margin: EdgeInsets.symmetric(vertical: 30),
       child: Card(
         color: Colors.grey[800],
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -68,11 +66,14 @@ class ClientAddressMapPage extends StatelessWidget {
   }
 
   Widget _iconMyLocation() {
-    return Center(
-      child: Image.asset(
-        'assets/img/ubicacion.png',
-        height: 45,
-        width: 45,
+    return Container(
+      margin: EdgeInsets.only(bottom: 40),
+      child: Center(
+        child: Image.asset(
+          'assets/img/ubicacion.png',
+          height: 45,
+          width: 45,
+        ),
       ),
     );
   }
@@ -89,7 +90,7 @@ class ClientAddressMapPage extends StatelessWidget {
       },
       onCameraIdle: () async {
         await con
-            .setLocationDraggableInfo(); // obtener latitud y longitud del mapa.
+            .setLocationDraggableInfo(); // EMPEZAR A OBTNER LA LAT Y LNG DE LA POSICION CENTRAL DEL MAPA
       },
     );
   }
