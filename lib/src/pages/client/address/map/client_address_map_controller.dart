@@ -1,14 +1,92 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart' as location;
 
 class ClientAddresMapController extends GetxController {
   CameraPosition initialPosition =
       const CameraPosition(target: LatLng(28.6483949, -106.0790341), zoom: 14);
 
   Completer<GoogleMapController> mapController = Completer();
+
+  Position? position;
+
+  Future setLocationDraggableInfo() async {
+    double lat = initialPosition.target.latitude;
+    double lng = initialPosition.target.longitude;
+
+    List<Placemark> address = await placemarkFromCoordinates(lat, lng);
+
+    if (address.isNotEmpty) {
+      String direction = address[0].thoroughfare ?? '';
+      String street = address[0].subThoroughfare ?? '';
+      String city = address[0].locality ?? '';
+      String department = address[0].administrativeArea ?? '';
+      String country = address[0].country ?? '';
+    }
+  }
+
+  void checkGPS() async {
+    bool isLocationEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (isLocationEnabled == true) {
+      updateLocation();
+    } else {
+      bool locationGPS = await location.Location().requestService();
+      if (locationGPS == true) {
+        updateLocation();
+      }
+    }
+  }
+
+  void updateLocation() async {
+    try {
+      await _determinePosition();
+      position = await Geolocator
+          .getLastKnownPosition(); //Latitud y longitud de nuestra posicion actual
+      animatedCameraPosition(position!.latitude, position!.longitude);
+    } catch (e) {
+      print('error: ${e}');
+    }
+  }
+
+  Future animatedCameraPosition(double lat, double lng) async {
+    GoogleMapController controller = await mapController.future;
+    controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(lat, lng), zoom: 13, bearing: 0),
+      ),
+    );
+  }
+
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
 
   void onMapCreate(GoogleMapController controller) {
     controller.setMapStyle(
