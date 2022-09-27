@@ -10,10 +10,16 @@ import 'package:location/location.dart' as location;
 class ClientAddresMapController extends GetxController {
   CameraPosition initialPosition =
       const CameraPosition(target: LatLng(28.6483949, -106.0790341), zoom: 14);
+  LatLng? addressLatLng;
+  var addressName = ''.obs;
 
   Completer<GoogleMapController> mapController = Completer();
 
   Position? position;
+
+  ClientAddresMapController() {
+    checkGPS(); //verificar si el GPS esta activo
+  }
 
   Future setLocationDraggableInfo() async {
     double lat = initialPosition.target.latitude;
@@ -27,6 +33,8 @@ class ClientAddresMapController extends GetxController {
       String city = address[0].locality ?? '';
       String department = address[0].administrativeArea ?? '';
       String country = address[0].country ?? '';
+      addressName.value = '$direction #$street, $city, $department, $country';
+      addressLatLng = LatLng(lat, lng);
     }
   }
 

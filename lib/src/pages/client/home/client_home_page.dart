@@ -14,43 +14,48 @@ class ClientHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: _bottomBar(),
-        body: Obx(() => IndexedStack(
-              index: con.indexTab.value,
-              children: [
-                ClientProductsListPage(),
-                DeliveryOrdersListPage(),
-                ClientProfileInfoPage()
-              ],
-            )));
+      bottomNavigationBar: _bottomBar(),
+      body: Obx(
+        () => IndexedStack(
+          index: con.indexTab.value,
+          children: [
+            ClientProductsListPage(),
+            DeliveryOrdersListPage(),
+            ClientProfileInfoPage()
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _bottomBar() {
-    return Obx(() => CustomAnimatedBottomBar(
-          containerHeight: 70,
-          backgroundColor: Colors.amber,
-          showElevation: true,
-          itemCornerRadius: 24,
-          curve: Curves.easeIn,
-          selectedIndex: con.indexTab.value,
-          onItemSelected: (index) => con.changeTab(index),
-          items: [
-            BottomNavyBarItem(
-                icon: Icon(Icons.apps),
-                title: Text('Productos'),
-                activeColor: Colors.white,
-                inactiveColor: Colors.black),
-            BottomNavyBarItem(
-                icon: Icon(Icons.list),
-                title: Text('Mis pedidos'),
-                activeColor: Colors.white,
-                inactiveColor: Colors.black),
-            BottomNavyBarItem(
-                icon: Icon(Icons.person),
-                title: Text('Perfil'),
-                activeColor: Colors.white,
-                inactiveColor: Colors.black),
-          ],
-        ));
+    return Obx(
+      () => CustomAnimatedBottomBar(
+        containerHeight: 70,
+        backgroundColor: Colors.amber,
+        showElevation: true,
+        itemCornerRadius: 24,
+        curve: Curves.easeIn,
+        selectedIndex: con.indexTab.value,
+        onItemSelected: (index) => con.changeTab(index),
+        items: [
+          BottomNavyBarItem(
+              icon: const Icon(Icons.apps),
+              title: const Text('Productos'),
+              activeColor: Colors.white,
+              inactiveColor: Colors.black),
+          BottomNavyBarItem(
+              icon: const Icon(Icons.list),
+              title: const Text('Mis pedidos'),
+              activeColor: Colors.white,
+              inactiveColor: Colors.black),
+          BottomNavyBarItem(
+              icon: const Icon(Icons.person),
+              title: const Text('Perfil'),
+              activeColor: Colors.white,
+              inactiveColor: Colors.black),
+        ],
+      ),
+    );
   }
 }

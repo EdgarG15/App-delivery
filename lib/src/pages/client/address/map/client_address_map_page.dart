@@ -7,21 +7,23 @@ class ClientAddressMapPage extends StatelessWidget {
   ClientAddresMapController con = Get.put(ClientAddresMapController());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text(
-          'Selecciona la ubicacion',
-          style: TextStyle(color: Colors.black),
+    return Obx(
+      () => Scaffold(
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.black),
+          title: const Text(
+            'Selecciona la ubicacion',
+            style: TextStyle(color: Colors.black),
+          ),
         ),
-      ),
-      body: Stack(
-        children: [
-          _googleMaps(),
-          _iconMyLocation(),
-          _cardAddress(),
-          _buttonAccept(),
-        ],
+        body: Stack(
+          children: [
+            _googleMaps(),
+            _iconMyLocation(),
+            _cardAddress(),
+            _buttonAccept(),
+          ],
+        ),
       ),
     );
   }
@@ -56,7 +58,7 @@ class ClientAddressMapPage extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(
-            'Name address',
+            con.addressName.value,
             style: TextStyle(
                 color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
           ),
@@ -84,6 +86,10 @@ class ClientAddressMapPage extends StatelessWidget {
       myLocationEnabled: false,
       onCameraMove: (position) {
         con.initialPosition = position;
+      },
+      onCameraIdle: () async {
+        await con
+            .setLocationDraggableInfo(); // obtener latitud y longitud del mapa.
       },
     );
   }
