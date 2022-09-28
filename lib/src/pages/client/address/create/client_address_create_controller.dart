@@ -48,7 +48,11 @@ class ClientAddressCreateController extends GetxController {
       ResponseApi responseApi = await addressProvider.create(address);
       Fluttertoast.showToast(
           msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
-      Get.back();
+      if (responseApi.success == true) {
+        address.id = responseApi.data;
+        GetStorage().write('address', address.toJson());
+        Get.back();
+      }
     }
   }
 
