@@ -4,8 +4,8 @@ import 'package:app_delivery/src/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ClientAddresListPage extends StatelessWidget {
-  ClientAddresListController con = Get.put(ClientAddresListController());
+class ClientAddressListPage extends StatelessWidget {
+  ClientAddressListController con = Get.put(ClientAddressListController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,10 +17,14 @@ class ClientAddresListPage extends StatelessWidget {
         ),
         actions: [_iconAddresCreate()],
       ),
-      body: Stack(children: [
-        _textSelectAddress(),
-        _ListAddress(context),
-      ]),
+      body: GetBuilder<ClientAddressListController>(
+        builder: (value) => Stack(
+          children: [
+            _textSelectAddress(),
+            _ListAddress(context),
+          ],
+        ),
+      ),
     );
   }
 
@@ -59,39 +63,36 @@ class ClientAddresListPage extends StatelessWidget {
   }
 
   Widget _radioSelectorAddress(Address address, int index) {
-    return Obx(
-      () => Container(
-        margin: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Radio(
-                  value: index,
-                  groupValue: con.radioValue.value,
-                  onChanged: con.handleRadioValueChange,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      address.address ?? '',
-                      style:
-                          TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      address.colonia ?? '',
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            Divider(
-              color: Colors.grey[400],
-            ),
-          ],
-        ),
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Radio(
+                value: index,
+                groupValue: con.radioValue.value,
+                onChanged: con.handleRadioValueChange,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    address.address ?? '',
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    address.colonia ?? '',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              )
+            ],
+          ),
+          Divider(
+            color: Colors.grey[400],
+          ),
+        ],
       ),
     );
   }

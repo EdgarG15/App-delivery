@@ -2,7 +2,7 @@ import 'package:app_delivery/src/pages/client/address/create/client_address_crea
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ClientAddresCreatePage extends StatelessWidget {
+class ClientAddressCreatePage extends StatelessWidget {
   ClientAddressCreateController con = Get.put(ClientAddressCreateController());
 
   @override

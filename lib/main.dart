@@ -74,10 +74,10 @@ class _MyAppState extends State<MyApp> {
             name: '/client/orders/create',
             page: () => ClientOrdersCreatePage()),
         GetPage(
-            name: '/client/addres/create',
-            page: () => ClientAddresCreatePage()),
+            name: '/client/address/create',
+            page: () => ClientAddressCreatePage()),
         GetPage(
-            name: '/client/address/list', page: () => ClientAddresListPage()),
+            name: '/client/address/list', page: () => ClientAddressListPage()),
       ],
       theme: ThemeData(
           primaryColor: Colors.amber,

@@ -1,6 +1,7 @@
 import 'package:app_delivery/src/models/address.dart';
 import 'package:app_delivery/src/models/response_api.dart';
 import 'package:app_delivery/src/models/user.dart';
+import 'package:app_delivery/src/pages/client/address/list/client_addres_list_controller.dart';
 import 'package:app_delivery/src/pages/client/address/map/client_address_map_page.dart';
 import 'package:app_delivery/src/providers/address_provider.dart';
 import 'package:flutter/widgets.dart';
@@ -19,6 +20,7 @@ class ClientAddressCreateController extends GetxController {
 
   User user = User.fromJson(GetStorage().read('user') ?? {});
   AddressProvider addressProvider = AddressProvider();
+  ClientAddressListController clientAddressListController = Get.find();
 
   void openGoogleMaps(BuildContext context) async {
     Map<String, dynamic> refPointMap = await showMaterialModalBottomSheet(
@@ -51,6 +53,7 @@ class ClientAddressCreateController extends GetxController {
       if (responseApi.success == true) {
         address.id = responseApi.data;
         GetStorage().write('address', address.toJson());
+        clientAddressListController.update();
         Get.back();
       }
     }
