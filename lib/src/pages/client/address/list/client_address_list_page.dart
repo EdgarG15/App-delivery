@@ -9,6 +9,7 @@ class ClientAddressListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: _buttonNext(context),
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         title: const Text(
@@ -79,11 +80,12 @@ class ClientAddressListPage extends StatelessWidget {
                 children: [
                   Text(
                     address.address ?? '',
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 13, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     address.colonia ?? '',
-                    style: TextStyle(fontSize: 12),
+                    style: const TextStyle(fontSize: 12),
                   ),
                 ],
               )
@@ -97,10 +99,26 @@ class ClientAddressListPage extends StatelessWidget {
     );
   }
 
+  Widget _buttonNext(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 50,
+      margin: EdgeInsets.symmetric(horizontal: 40, vertical: 40),
+      child: ElevatedButton(
+          onPressed: () => con.createOrder(),
+          style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: 15)),
+          child: Text(
+            'Continuar',
+            style: TextStyle(color: Colors.black),
+          )),
+    );
+  }
+
   Widget _textSelectAddress() {
     return Container(
-      margin: EdgeInsets.only(top: 30, left: 30),
-      child: Text(
+      margin: const EdgeInsets.only(top: 30, left: 30),
+      child: const Text(
         'Elige tu direccion',
         style: TextStyle(
             color: Colors.black, fontSize: 19, fontWeight: FontWeight.bold),
