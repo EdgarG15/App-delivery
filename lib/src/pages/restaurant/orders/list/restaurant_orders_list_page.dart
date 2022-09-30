@@ -68,65 +68,69 @@ class RestaurantOrdersListPage extends StatelessWidget {
   }
 
   Widget _cardOrder(Order order) {
-    return Container(
-      height: 150,
-      margin: EdgeInsets.only(left: 20, right: 20, top: 20),
-      child: Card(
-        elevation: 3.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Stack(
-          children: [
-            Container(
-              height: 30,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Colors.amber,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
+    return GestureDetector(
+      onTap: () => con.goToOrderDetail(order),
+      child: Container(
+        height: 150,
+        margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
+        child: Card(
+          elevation: 3.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Stack(
+            children: [
+              Container(
+                height: 30,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                ),
+                child: Container(
+                  margin: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    'Orden #${order.id}',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
                 ),
               ),
-              child: Container(
-                margin: const EdgeInsets.only(top: 5),
-                child: Text(
-                  'Orden #${order.id}',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 15),
+              Container(
+                margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(top: 5),
+                      width: double.infinity,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                          'Pedido: ${RelativeTimeUtil.getRelativeTime(order.timestamp ?? 0)}'),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 5),
+                      width: double.infinity,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                          'Cliente: ${order.client?.name ?? ''} ${order.client?.lastname ?? ''}'),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 5),
+                      width: double.infinity,
+                      alignment: Alignment.centerLeft,
+                      child:
+                          Text('Entregar en: ${order.address?.address ?? ''}'),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 5),
-                    width: double.infinity,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        'Pedido: ${RelativeTimeUtil.getRelativeTime(order.timestamp ?? 0)}'),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 5),
-                    width: double.infinity,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        'Cliente: ${order.client?.name ?? ''} ${order.client?.lastname ?? ''}'),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 5),
-                    width: double.infinity,
-                    alignment: Alignment.centerLeft,
-                    child: Text('Entregar en: ${order.address?.address ?? ''}'),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

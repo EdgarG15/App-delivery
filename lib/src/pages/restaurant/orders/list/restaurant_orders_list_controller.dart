@@ -10,4 +10,9 @@ class RestaurantOrdersListController extends GetxController {
   Future<List<Order>> getOrders(String status) async {
     return await ordersProvider.findByStatus(status);
   }
+
+  void goToOrderDetail(Order order) {
+    Get.toNamed('/restaurant/orders/detail',
+        arguments: {'order': order.toJson()});
+  }
 }
