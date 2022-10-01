@@ -19,13 +19,16 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
       () => Scaffold(
         bottomNavigationBar: Container(
           color: const Color.fromRGBO(245, 245, 245, 1),
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: con.order.status == 'PAGADO'
+              ? MediaQuery.of(context).size.height * 0.5
+              : MediaQuery.of(context).size.height * 0.45,
           padding: const EdgeInsets.only(top: 5),
           child: Column(
             children: [
               _dataDate(),
               _dataClient(),
               _dataAddress(),
+              _dataDelivery(),
               _totalToPay(context),
             ],
           ),
@@ -51,11 +54,25 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
     );
   }
 
+  Widget _dataDelivery() {
+    return con.order.status != 'PAGADO'
+        ? Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            child: ListTile(
+              title: const Text('Repartidor aignado'),
+              subtitle: Text(
+                  '${con.order.delivery?.name ?? ''} ${con.order.delivery?.lastname ?? ''} - ${con.order.delivery?.phone ?? ''}'),
+              trailing: const Icon(Icons.delivery_dining),
+            ),
+          )
+        : Container();
+  }
+
   Widget _dataClient() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: const Text('Client y Telefono'),
+        title: const Text('Cliente y Telefono'),
         subtitle: Text(
             '${con.order.client?.name ?? ''} ${con.order.client?.lastname ?? ''} - ${con.order.client?.phone ?? ''}'),
         trailing: const Icon(Icons.person),
@@ -122,12 +139,17 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
           width: double.infinity,
           alignment: Alignment.centerLeft,
           margin: const EdgeInsets.only(left: 30, top: 10),
-          child: const Text(
-            'Asignar repartidor',
-            style: TextStyle(fontStyle: FontStyle.italic, color: Colors.red),
-          ),
+          child: con.order.status == 'PAGADO'
+              ? const Text(
+                  'Asignar repartidor',
+                  style:
+                      TextStyle(fontStyle: FontStyle.italic, color: Colors.red),
+                )
+              : Container(),
         ),
-        _dropDownDelivery(con.users),
+        con.order.status == 'PAGADO'
+            ? _dropDownDelivery(con.users)
+            : Container(),
         Container(
           margin: const EdgeInsets.only(left: 20, top: 25),
           child: Row(
@@ -138,19 +160,21 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 30),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(15),
-                  ),
-                  child: const Text(
-                    'Despachar Orden',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              )
+              con.order.status == 'PAGADO'
+                  ? Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 30),
+                      child: ElevatedButton(
+                        onPressed: () => con.updateOrder(),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(15),
+                        ),
+                        child: const Text(
+                          'Despachar Orden',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    )
+                  : Container(),
             ],
           ),
         )

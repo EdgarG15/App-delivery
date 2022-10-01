@@ -1,6 +1,9 @@
 import 'package:app_delivery/src/models/order.dart';
+import 'package:app_delivery/src/models/response_api.dart';
 import 'package:app_delivery/src/models/user.dart';
+import 'package:app_delivery/src/providers/orders_provider.dart';
 import 'package:app_delivery/src/providers/users_provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class RestaurantOrdersDetailController extends GetxController {
@@ -11,11 +14,25 @@ class RestaurantOrdersDetailController extends GetxController {
   List<User> users = <User>[].obs;
 
   UsersProvider usersProvider = UsersProvider();
-
+  OrdersProvider ordersProvider = OrdersProvider();
   RestaurantOrdersDetailController() {
     print('Order: ${order.toJson()}');
     getDeliveryMen();
     getTotal();
+  }
+  void updateOrder() async {
+    if (idDelivery.value != '') {
+      //SE selecciono el delivery
+      order.idDelivery = idDelivery.value;
+      ResponseApi responseApi = await ordersProvider.updateToDispatched(order);
+      Fluttertoast.showToast(
+          msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
+      if (responseApi.success == true) {
+        Get.offNamedUntil('/restaurant/home', (route) => false);
+      }
+    } else {
+      Get.snackbar('Peticion Denegada', 'Debes Seleccionar el repartidor');
+    }
   }
 
   void getDeliveryMen() async {
