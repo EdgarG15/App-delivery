@@ -10,32 +10,29 @@ class ClientOrdersCreatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        bottomNavigationBar: Container(
-          color: Color.fromRGBO(245, 245, 245, 1),
-          height: 100,
-          child: _totalToPay(context),
-        ),
-        appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
-          title: Text(
-            'Mi Orden',
-            style: TextStyle(color: Colors.black),
+    return Obx(() => Scaffold(
+          bottomNavigationBar: Container(
+            color: Color.fromRGBO(245, 245, 245, 1),
+            height: 100,
+            child: _totalToPay(context),
           ),
-        ),
-        body: con.selectedProducts.length > 0
-            ? ListView(
-                children: con.selectedProducts.map((Product product) {
-                  return _cardProduct(product);
-                }).toList(),
-              )
-            : Center(
-                child:
-                    NoDataWidget(text: 'No hay ningun producto agregado aun'),
-              ),
-      ),
-    );
+          appBar: AppBar(
+            iconTheme: IconThemeData(color: Colors.black),
+            title: Text(
+              'Mi Orden',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          body: con.selectedProducts.length > 0
+              ? ListView(
+                  children: con.selectedProducts.map((Product product) {
+                    return _cardProduct(product);
+                  }).toList(),
+                )
+              : Center(
+                  child: NoDataWidget(
+                      text: 'No hay ningun producto agregado aun')),
+        ));
   }
 
   Widget _totalToPay(BuildContext context) {
