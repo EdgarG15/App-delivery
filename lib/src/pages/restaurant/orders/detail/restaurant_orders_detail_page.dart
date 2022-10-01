@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../models/product.dart';
+import '../../../../models/user.dart';
 import '../../../../utils/relative_time_util.dart';
 import '../../../../widgets/no_data_widget.dart';
 
@@ -17,8 +18,9 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
     return Obx(
       () => Scaffold(
         bottomNavigationBar: Container(
-          color: Color.fromRGBO(245, 245, 245, 1),
-          height: MediaQuery.of(context).size.height * 0.4,
+          color: const Color.fromRGBO(245, 245, 245, 1),
+          height: MediaQuery.of(context).size.height * 0.5,
+          padding: const EdgeInsets.only(top: 5),
           child: Column(
             children: [
               _dataDate(),
@@ -115,26 +117,39 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
   Widget _totalToPay(BuildContext context) {
     return Column(
       children: [
-        Divider(height: 1, color: Colors.grey[300]),
+        Divider(height: 1, color: Colors.grey[400]),
         Container(
-          margin: EdgeInsets.only(left: 20, top: 25),
+          width: double.infinity,
+          alignment: Alignment.centerLeft,
+          margin: const EdgeInsets.only(left: 30, top: 10),
+          child: const Text(
+            'Asignar repartidor',
+            style: TextStyle(fontStyle: FontStyle.italic, color: Colors.red),
+          ),
+        ),
+        _dropDownDelivery(con.users),
+        Container(
+          margin: const EdgeInsets.only(left: 20, top: 25),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 'TOTAL: \$${con.total.value}',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 30),
+                margin: const EdgeInsets.symmetric(horizontal: 30),
                 child: ElevatedButton(
-                    onPressed: () {},
-                    style:
-                        ElevatedButton.styleFrom(padding: EdgeInsets.all(15)),
-                    child: Text(
-                      'Despachar Orden',
-                      style: TextStyle(color: Colors.black),
-                    )),
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(15),
+                  ),
+                  child: const Text(
+                    'Despachar Orden',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
               )
             ],
           ),
@@ -160,5 +175,64 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _dropDownDelivery(List<User> users) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      margin: const EdgeInsets.only(top: 15),
+      child: DropdownButton(
+        underline: Container(
+          alignment: Alignment.centerRight,
+          child: const Icon(
+            Icons.arrow_drop_down_circle,
+            color: Colors.amber,
+          ),
+        ),
+        elevation: 3,
+        isExpanded: true,
+        hint: const Text(
+          'Seleccionar repartidor',
+          style: TextStyle(fontSize: 15),
+        ),
+        items: _dropDownItems(users),
+        value: con.idDelivery.value == '' ? null : con.idDelivery.value,
+        onChanged: (option) {
+          print('Opcion seleccionada ${option}');
+          con.idDelivery.value = option.toString();
+        },
+      ),
+    );
+  }
+
+  List<DropdownMenuItem<String>> _dropDownItems(List<User> users) {
+    List<DropdownMenuItem<String>> list = [];
+    users.forEach((users) {
+      list.add(DropdownMenuItem(
+        value: users.id,
+        child: Row(
+          children: [
+            Container(
+              height: 40,
+              width: 40,
+              child: FadeInImage(
+                image: users.image != null
+                    ? NetworkImage(users.image!)
+                    : AssetImage('assets/img/no_image.jpg') as ImageProvider,
+                fit: BoxFit.cover,
+                fadeInDuration: const Duration(milliseconds: 50),
+                placeholder: AssetImage('assets/img/no_image.jpg'),
+              ),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            Text(users.name ?? ''),
+          ],
+        ),
+      ));
+    });
+
+    return list;
   }
 }

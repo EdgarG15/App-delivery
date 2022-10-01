@@ -85,8 +85,8 @@ class RestaurantProductsCreateePage extends StatelessWidget {
 
   Widget _dropDownCategories(List<Category> categories) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 50),
-      margin: EdgeInsets.only(top: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      margin: const EdgeInsets.only(top: 15),
       child: DropdownButton(
         underline: Container(
           alignment: Alignment.centerRight,
@@ -212,10 +212,12 @@ class RestaurantProductsCreateePage extends StatelessWidget {
         keyboardType: TextInputType.text,
         maxLines: 4,
         decoration: InputDecoration(
-            hintText: 'Descripcion',
-            prefixIcon: Container(
-                margin: EdgeInsets.only(bottom: 50),
-                child: Icon(Icons.description))),
+          hintText: 'Descripcion',
+          prefixIcon: Container(
+            margin: const EdgeInsets.only(bottom: 50),
+            child: const Icon(Icons.description),
+          ),
+        ),
       ),
     );
   }
