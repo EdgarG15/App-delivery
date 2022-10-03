@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 
 import '../../../utils/custom_animated_bottom_bar.dart';
 import '../../delivery/orders/list/delivery_orders_list_page.dart';
-import '../../restaurant/orders/list/restaurant_orders_list_page.dart';
 import 'client_home_controller.dart';
 
 class ClientHomePage extends StatelessWidget {

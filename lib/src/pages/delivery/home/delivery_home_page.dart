@@ -8,10 +8,11 @@ import 'package:get/get.dart';
 
 import '../../../utils/custom_animated_bottom_bar.dart';
 import '../../restaurant/orders/list/restaurant_orders_list_page.dart';
-import 'restaurant_home_controller.dart';
+import '../orders/list/delivery_orders_list_page.dart';
+import 'delivery_home_controller.dart';
 
-class RestaurantHomePage extends StatelessWidget {
-  RestaurantHomeController con = Get.put(RestaurantHomeController());
+class DeliveryHomePage extends StatelessWidget {
+  DeliveryHomeController con = Get.put(DeliveryHomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +21,8 @@ class RestaurantHomePage extends StatelessWidget {
         body: Obx(() => IndexedStack(
               index: con.indexTab.value,
               children: [
-                RestaurantOrdersListPage(),
-                RestaurantCategoriesCreateePage(),
-                RestaurantProductsCreateePage(),
-                ClientProfileInfoPage()
+                DeliveryOrdersListPage(),
+                ClientProfileInfoPage(),
               ],
             )));
   }
@@ -41,16 +40,6 @@ class RestaurantHomePage extends StatelessWidget {
             BottomNavyBarItem(
                 icon: Icon(Icons.list_alt),
                 title: const Text('Pedidos'),
-                activeColor: Colors.white,
-                inactiveColor: Colors.black),
-            BottomNavyBarItem(
-                icon: Icon(Icons.category),
-                title: Text('Categoria'),
-                activeColor: Colors.white,
-                inactiveColor: Colors.black),
-            BottomNavyBarItem(
-                icon: Icon(Icons.restaurant_menu),
-                title: Text('Producto'),
                 activeColor: Colors.white,
                 inactiveColor: Colors.black),
             BottomNavyBarItem(
