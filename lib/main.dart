@@ -9,6 +9,7 @@ import 'package:app_delivery/src/pages/client/profile/update/client_profile_upda
 import 'package:app_delivery/src/pages/delivery/home/delivery_home_page.dart';
 import 'package:app_delivery/src/pages/delivery/orders/detail/delivery_orders_detail_page.dart';
 import 'package:app_delivery/src/pages/delivery/orders/list/delivery_orders_list_page.dart';
+import 'package:app_delivery/src/pages/delivery/orders/map/delivery_orders_map_page.dart';
 import 'package:app_delivery/src/pages/home/home_page.dart';
 import 'package:app_delivery/src/pages/login/login_page.dart';
 import 'package:app_delivery/src/pages/register/register_page.dart';
@@ -73,6 +74,8 @@ class _MyAppState extends State<MyApp> {
         GetPage(
             name: '/delivery/orders/detail',
             page: () => DeliveryOrdersDetailPage()),
+        GetPage(
+            name: '/delivery/orders/map', page: () => DeliveryOrdersMapPage()),
         GetPage(name: '/delivery/home', page: () => DeliveryHomePage()),
         GetPage(name: '/client/products/list', page: () => ClientHomePage()),
         GetPage(name: '/client/home', page: () => ClientHomePage()),

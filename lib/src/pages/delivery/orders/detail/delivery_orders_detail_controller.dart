@@ -24,8 +24,12 @@ class DeliveryOrdersDetailController extends GetxController {
     Fluttertoast.showToast(
         msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
     if (responseApi.success == true) {
-      Get.offNamedUntil('/delivery/home', (route) => false);
+      goToOrderMap();
     }
+  }
+
+  void goToOrderMap() {
+    Get.toNamed('/delivery/orders/map', arguments: {'order': order.toJson()});
   }
 
   void getTotal() {

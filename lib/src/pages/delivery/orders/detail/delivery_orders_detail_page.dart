@@ -130,24 +130,44 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
               ),
               con.order.status == 'DESPACHADO'
-                  ? Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 30),
-                      child: ElevatedButton(
-                        onPressed: () => con.updateOrder(),
-                        style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.all(15),
-                            backgroundColor: Colors.red),
-                        child: const Text(
-                          'Entregar Orden',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    )
-                  : Container(),
+                  ? _buttonUpdateOrder()
+                  : con.order.status == 'EN CAMINO'
+                      ? _buttonGoToOrderMap()
+                      : Container(),
             ],
           ),
         )
       ],
+    );
+  }
+
+  Widget _buttonUpdateOrder() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 30),
+      child: ElevatedButton(
+        onPressed: () => con.updateOrder(),
+        style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.all(15), backgroundColor: Colors.red),
+        child: const Text(
+          'Entregar Orden',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+    );
+  }
+
+  Widget _buttonGoToOrderMap() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 30),
+      child: ElevatedButton(
+        onPressed: () => con.goToOrderMap(),
+        style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.all(15), backgroundColor: Colors.amber),
+        child: const Text(
+          'Volver al mapa',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
     );
   }
 
