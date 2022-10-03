@@ -17,28 +17,15 @@ class DeliveryOrdersDetailController extends GetxController {
   OrdersProvider ordersProvider = OrdersProvider();
   DeliveryOrdersDetailController() {
     print('Order: ${order.toJson()}');
-    getDeliveryMen();
     getTotal();
   }
   void updateOrder() async {
-    if (idDelivery.value != '') {
-      //SE selecciono el delivery
-      order.idDelivery = idDelivery.value;
-      ResponseApi responseApi = await ordersProvider.updateToDispatched(order);
-      Fluttertoast.showToast(
-          msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
-      if (responseApi.success == true) {
-        Get.offNamedUntil('/restaurant/home', (route) => false);
-      }
-    } else {
-      Get.snackbar('Peticion Denegada', 'Debes Seleccionar el repartidor');
+    ResponseApi responseApi = await ordersProvider.updateToOnTheWay(order);
+    Fluttertoast.showToast(
+        msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
+    if (responseApi.success == true) {
+      Get.offNamedUntil('/delivery/home', (route) => false);
     }
-  }
-
-  void getDeliveryMen() async {
-    var result = await usersProvider.findDeliveryMen();
-    users.clear();
-    users.addAll(result);
   }
 
   void getTotal() {
