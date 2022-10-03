@@ -23,7 +23,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             _buttonBack(),
-                            //_iconCenterMyLocation(),
+                            _iconCenterMyLocation(),
                           ],
                         ),
                         Spacer(),
@@ -35,6 +35,29 @@ class DeliveryOrdersMapPage extends StatelessWidget {
                 ],
               ),
             ));
+  }
+
+  Widget _iconCenterMyLocation() {
+    return GestureDetector(
+      onTap: () => con.centerPosition(),
+      child: Container(
+        alignment: Alignment.centerRight,
+        margin: EdgeInsets.symmetric(horizontal: 5),
+        child: Card(
+          shape: CircleBorder(),
+          color: Colors.white,
+          elevation: 4,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Icon(
+              Icons.location_searching,
+              color: Colors.grey[600],
+              size: 20,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buttonBack() {
@@ -77,8 +100,26 @@ class DeliveryOrdersMapPage extends StatelessWidget {
               con.order.address?.address ?? '', 'Direccion', Icons.location_on),
           Divider(color: Colors.grey, endIndent: 30, indent: 30),
           _clientInfo(),
-          //_buttonAccept(context)
+          _buttonAccept(context)
         ],
+      ),
+    );
+  }
+
+  Widget _buttonAccept(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.only(left: 30, right: 30),
+      child: ElevatedButton(
+        onPressed: con.isClose == true ? () => con.updateToDelivered() : null,
+        style: ElevatedButton.styleFrom(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            padding: EdgeInsets.all(15)),
+        child: Text(
+          'ENTREGAR PEDIDO',
+          style: TextStyle(color: Colors.black),
+        ),
       ),
     );
   }
