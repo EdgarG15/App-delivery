@@ -2,6 +2,7 @@ import 'package:app_delivery/src/pages/client/address/create/client_address_crea
 import 'package:app_delivery/src/pages/client/address/list/client_address_list_page.dart';
 import 'package:app_delivery/src/pages/client/home/client_home_page.dart';
 import 'package:app_delivery/src/pages/client/orders/create/client_orders_create_page.dart';
+import 'package:app_delivery/src/pages/client/orders/detail/client_orders_detail_page.dart';
 import 'package:app_delivery/src/pages/client/payments/create/client_payments_create.page.dart';
 import 'package:app_delivery/src/pages/client/products/list/client_products_list_page.dart';
 import 'package:app_delivery/src/pages/client/profile/info/client_profile_info_page.dart';
@@ -50,8 +51,9 @@ class _MyAppState extends State<MyApp> {
     print('Usuario id: ${userSession.id}');
 
     return GetMaterialApp(
-      title: 'Delivery Udemy',
+      title: 'App delivery',
       debugShowCheckedModeBanner: false,
+      // initialRoute: '/client/payments/create',
       initialRoute: userSession.id != null
           ? userSession.roles!.length > 1
               ? '/roles'
@@ -62,9 +64,10 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/register', page: () => RegisterPage()),
         GetPage(name: '/home', page: () => HomePage()),
         GetPage(name: '/roles', page: () => RolesPages()),
-        GetPage(
-            name: '/restaurant/orders/list', page: () => RestaurantHomePage()),
         GetPage(name: '/restaurant/home', page: () => RestaurantHomePage()),
+        GetPage(
+            name: '/restaurant/orders/list',
+            page: () => RestaurantOrdersListPage()),
         GetPage(
             name: '/restaurant/orders/detail',
             page: () => RestaurantOrdersDetailPage()),
@@ -77,8 +80,10 @@ class _MyAppState extends State<MyApp> {
         GetPage(
             name: '/delivery/orders/map', page: () => DeliveryOrdersMapPage()),
         GetPage(name: '/delivery/home', page: () => DeliveryHomePage()),
-        GetPage(name: '/client/products/list', page: () => ClientHomePage()),
         GetPage(name: '/client/home', page: () => ClientHomePage()),
+        GetPage(
+            name: '/client/products/list',
+            page: () => ClientProductsListPage()),
         GetPage(
             name: '/client/profile/info', page: () => ClientProfileInfoPage()),
         GetPage(
@@ -87,6 +92,9 @@ class _MyAppState extends State<MyApp> {
         GetPage(
             name: '/client/orders/create',
             page: () => ClientOrdersCreatePage()),
+        GetPage(
+            name: '/client/orders/detail',
+            page: () => ClientOrdersDetailPage()),
         GetPage(
             name: '/client/address/create',
             page: () => ClientAddressCreatePage()),

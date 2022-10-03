@@ -16,97 +16,94 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        bottomNavigationBar: Container(
-          color: const Color.fromRGBO(245, 245, 245, 1),
-          height: MediaQuery.of(context).size.height * 0.45,
-          padding: const EdgeInsets.only(top: 5),
-          child: Column(
-            children: [
-              _dataDate(),
-              _dataClient(),
-              _dataAddress(),
-              _totalToPay(context),
-            ],
+    return Obx(() => Scaffold(
+          bottomNavigationBar: Container(
+            color: Color.fromRGBO(245, 245, 245, 1),
+            height: MediaQuery.of(context).size.height * 0.4,
+            // padding: EdgeInsets.only(top: 5),
+            child: Column(
+              children: [
+                _dataDate(),
+                _dataClient(),
+                _dataAddress(),
+                _totalToPay(context),
+              ],
+            ),
           ),
-        ),
-        appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.black),
-          title: Text(
-            'Order #${con.order.id}',
-            style: const TextStyle(color: Colors.black),
+          appBar: AppBar(
+            iconTheme: IconThemeData(color: Colors.black),
+            title: Text(
+              'Order #${con.order.id}',
+              style: TextStyle(color: Colors.black),
+            ),
           ),
-        ),
-        body: con.order.products!.isNotEmpty
-            ? ListView(
-                children: con.order.products!.map((Product product) {
-                  return _cardProduct(product);
-                }).toList(),
-              )
-            : Center(
-                child:
-                    NoDataWidget(text: 'No hay ningun producto agregado aun'),
-              ),
-      ),
-    );
+          body: con.order.products!.isNotEmpty
+              ? ListView(
+                  children: con.order.products!.map((Product product) {
+                    return _cardProduct(product);
+                  }).toList(),
+                )
+              : Center(
+                  child: NoDataWidget(
+                      text: 'No hay ningun producto agregado aun')),
+        ));
   }
 
   Widget _dataClient() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: const Text('Cliente y Telefono'),
+        title: Text('Cliente y Telefono'),
         subtitle: Text(
             '${con.order.client?.name ?? ''} ${con.order.client?.lastname ?? ''} - ${con.order.client?.phone ?? ''}'),
-        trailing: const Icon(Icons.person),
+        trailing: Icon(Icons.person),
       ),
     );
   }
 
   Widget _dataAddress() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: const Text('Direccion de entrega'),
+        title: Text('Direccion de entrega'),
         subtitle: Text(con.order.address?.address ?? ''),
-        trailing: const Icon(Icons.location_on),
+        trailing: Icon(Icons.location_on),
       ),
     );
   }
 
   Widget _dataDate() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
-        title: const Text('Fecha del pedido'),
+        title: Text('Fecha del pedido'),
         subtitle: Text(
             '${RelativeTimeUtil.getRelativeTime(con.order.timestamp ?? 0)}'),
-        trailing: const Icon(Icons.timer),
+        trailing: Icon(Icons.timer),
       ),
     );
   }
 
   Widget _cardProduct(Product product) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 7),
       child: Row(
         children: [
           _imageProduct(product),
-          const SizedBox(width: 15),
+          SizedBox(width: 15),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 product.name ?? '',
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              const SizedBox(
-                height: 7,
-              ),
+              SizedBox(height: 7),
               Text(
-                'Cantidad ${product.quantity}',
-                style: const TextStyle(fontSize: 13),
+                'Cantidad: ${product.quantity}',
+                style: TextStyle(
+                    // fontWeight: FontWeight.bold
+                    fontSize: 13),
               ),
             ],
           ),
@@ -115,25 +112,46 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
     );
   }
 
+  Widget _imageProduct(Product product) {
+    return Container(
+      height: 50,
+      width: 50,
+      // padding: EdgeInsets.all(2),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: FadeInImage(
+          image: product.image1 != null
+              ? NetworkImage(product.image1!)
+              : AssetImage('assets/img/no_image.jpg') as ImageProvider,
+          fit: BoxFit.cover,
+          fadeInDuration: Duration(milliseconds: 50),
+          placeholder: AssetImage('assets/img/no_image.jpg'),
+        ),
+      ),
+    );
+  }
+
   Widget _totalToPay(BuildContext context) {
     return Column(
       children: [
-        Divider(height: 1, color: Colors.grey[400]),
+        Divider(height: 1, color: Colors.grey[300]),
         Container(
-          margin: const EdgeInsets.only(left: 20, top: 25),
+          margin: EdgeInsets.only(
+              left: con.order.status == 'PAGADO' ? 30 : 37, top: 15),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: con.order.status == 'PAGADO'
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.start,
             children: [
               Text(
                 'TOTAL: \$${con.total.value}',
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
               ),
               con.order.status == 'DESPACHADO'
                   ? _buttonUpdateOrder()
                   : con.order.status == 'EN CAMINO'
                       ? _buttonGoToOrderMap()
-                      : Container(),
+                      : Container()
             ],
           ),
         )
@@ -143,50 +161,29 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
 
   Widget _buttonUpdateOrder() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
+      margin: EdgeInsets.symmetric(horizontal: 30),
       child: ElevatedButton(
-        onPressed: () => con.updateOrder(),
-        style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.all(15), backgroundColor: Colors.red),
-        child: const Text(
-          'Entregar Orden',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
+          onPressed: () => con.updateOrder(),
+          style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.all(15), primary: Colors.cyan),
+          child: Text(
+            'INICIAR ENTREGA',
+            style: TextStyle(color: Colors.white),
+          )),
     );
   }
 
   Widget _buttonGoToOrderMap() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
+      margin: EdgeInsets.symmetric(horizontal: 30),
       child: ElevatedButton(
-        onPressed: () => con.goToOrderMap(),
-        style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.all(15), backgroundColor: Colors.amber),
-        child: const Text(
-          'Volver al mapa',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
-    );
-  }
-
-  Widget _imageProduct(Product product) {
-    return SizedBox(
-      height: 50,
-      width: 50,
-      // padding: EdgeInsets.all(2),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: FadeInImage(
-          image: product.image1 != null
-              ? NetworkImage(product.image1!)
-              : const AssetImage('assets/img/no_image.jpg') as ImageProvider,
-          fit: BoxFit.cover,
-          fadeInDuration: const Duration(milliseconds: 50),
-          placeholder: const AssetImage('assets/img/no_image.jpg'),
-        ),
-      ),
+          onPressed: () => con.goToOrderMap(),
+          style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.all(15), primary: Colors.lightGreenAccent),
+          child: Text(
+            'VOLVER AL MAPA',
+            style: TextStyle(color: Colors.black),
+          )),
     );
   }
 }

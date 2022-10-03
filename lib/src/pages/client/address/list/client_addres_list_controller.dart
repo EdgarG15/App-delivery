@@ -38,26 +38,7 @@ class ClientAddressListController extends GetxController {
   }
 
   void createOrder() async {
-    Address a = Address.fromJson(GetStorage().read('address') ?? {});
-    List<Product> products = [];
-    if (GetStorage().read('shopping_bag') is List<Product>) {
-      products = GetStorage().read('shopping_bag');
-    } else {
-      products = Product.fromJsonList(GetStorage().read('shopping_bag'));
-    }
-    Order order = Order(
-      idClient: user.id,
-      idAddress: a.id,
-      products: products,
-    );
-    ResponseApi responseApi = await ordersProvider.create(order);
-    Get.snackbar('Proceso terminado', responseApi.message ?? '');
-    Fluttertoast.showToast(
-        msg: responseApi.message ?? '', toastLength: Toast.LENGTH_LONG);
-    if (responseApi.success == true) {
-      GetStorage().remove('shopping_bag');
-      Get.toNamed('/client/payments/create');
-    }
+    Get.toNamed('/client/payments/create');
   }
 
   void handleRadioValueChange(int? value) {

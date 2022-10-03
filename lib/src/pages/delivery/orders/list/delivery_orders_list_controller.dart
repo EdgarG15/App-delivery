@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 class DeliveryOrdersListController extends GetxController {
   OrdersProvider ordersProvider = OrdersProvider();
   List<String> status = <String>['DESPACHADO', 'EN CAMINO', 'ENTREGADO'].obs;
+
   User user = User.fromJson(GetStorage().read('user') ?? {});
 
   Future<List<Order>> getOrders(String status) async {

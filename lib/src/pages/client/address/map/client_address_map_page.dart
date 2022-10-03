@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ClientAddressMapPage extends StatelessWidget {
-  ClientAddresMapController con = Get.put(ClientAddresMapController());
+  ClientAddressMapController con = Get.put(ClientAddressMapController());
+
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
@@ -70,9 +71,9 @@ class ClientAddressMapPage extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 40),
       child: Center(
         child: Image.asset(
-          'assets/img/ubicacion.png',
-          height: 45,
-          width: 45,
+          'assets/img/my_location_yellow.png',
+          width: 65,
+          height: 65,
         ),
       ),
     );

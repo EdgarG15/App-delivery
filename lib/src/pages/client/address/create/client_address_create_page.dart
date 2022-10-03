@@ -82,10 +82,10 @@ class ClientAddressCreatePage extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 40),
       child: TextField(
-        controller: con.neighborhoodController,
+        controller: con.coloniaController,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-            hintText: 'Colonia', prefixIcon: Icon(Icons.location_city)),
+            hintText: 'Barrio', prefixIcon: Icon(Icons.location_city)),
       ),
     );
   }
@@ -110,7 +110,9 @@ class ClientAddressCreatePage extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
       child: ElevatedButton(
-          onPressed: () => con.createAddress(),
+          onPressed: () {
+            con.createAddress();
+          },
           style: ElevatedButton.styleFrom(
               padding: EdgeInsets.symmetric(vertical: 15)),
           child: Text(

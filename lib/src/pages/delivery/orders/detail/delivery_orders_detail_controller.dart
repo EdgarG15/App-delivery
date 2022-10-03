@@ -11,14 +11,16 @@ class DeliveryOrdersDetailController extends GetxController {
 
   var total = 0.0.obs;
   var idDelivery = ''.obs;
-  List<User> users = <User>[].obs;
 
   UsersProvider usersProvider = UsersProvider();
   OrdersProvider ordersProvider = OrdersProvider();
+  List<User> users = <User>[].obs;
+
   DeliveryOrdersDetailController() {
     print('Order: ${order.toJson()}');
     getTotal();
   }
+
   void updateOrder() async {
     ResponseApi responseApi = await ordersProvider.updateToOnTheWay(order);
     Fluttertoast.showToast(
