@@ -96,8 +96,8 @@ class RestaurantOrdersDetailPage extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
         title: const Text('Fecha del pedido'),
-        subtitle: Text(
-            '${RelativeTimeUtil.getRelativeTime(con.order.timestamp ?? 0)}'),
+        subtitle:
+            Text(RelativeTimeUtil.getRelativeTime(con.order.timestamp ?? 0)),
         trailing: const Icon(Icons.timer),
       ),
     );

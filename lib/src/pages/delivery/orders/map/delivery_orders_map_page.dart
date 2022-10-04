@@ -198,7 +198,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
       onMapCreated: con.onMapCreate,
       myLocationButtonEnabled: false,
       myLocationEnabled: false,
-      // markers: Set<Marker>.of(con.markers.values),
+      markers: Set<Marker>.of(con.markers.values),
       // polylines: con.polylines,
     );
   }

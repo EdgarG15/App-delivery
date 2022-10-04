@@ -151,11 +151,11 @@ class ClientProductsListPage extends StatelessWidget {
                   child: FadeInImage(
                     image: product.image1 != null
                         ? NetworkImage(product.image1!)
-                        : AssetImage('assets/img/no_image.jpg')
+                        : const AssetImage('assets/img/no_image.jpg')
                             as ImageProvider,
                     fit: BoxFit.cover,
-                    fadeInDuration: Duration(milliseconds: 50),
-                    placeholder: AssetImage('assets/img/no_image.jpg'),
+                    fadeInDuration: const Duration(milliseconds: 50),
+                    placeholder: const AssetImage('assets/img/no_image.jpg'),
                   ),
                 ),
               ),

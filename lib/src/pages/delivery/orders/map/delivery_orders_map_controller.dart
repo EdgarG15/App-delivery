@@ -24,7 +24,7 @@ class DeliveryOrdersMapController extends GetxController {
   OrdersProvider ordersProvider = OrdersProvider();
 
   CameraPosition initialPosition =
-      CameraPosition(target: LatLng(1.2004567, -77.2787444), zoom: 14);
+      CameraPosition(target: LatLng(28.633379, -106.0799738), zoom: 14);
 
   LatLng? addressLatLng;
   var addressName = ''.obs;
@@ -131,7 +131,7 @@ class DeliveryOrdersMapController extends GetxController {
 
   void checkGPS() async {
     deliveryMarker =
-        await createMarkerFromAssets('assets/img/delivery_little.png');
+        await createMarkerFromAssets('assets/img/delivery_little2.png');
     homeMarker = await createMarkerFromAssets('assets/img/home.png');
 
     bool isLocationEnabled = await Geolocator.isLocationServiceEnabled();
@@ -191,27 +191,27 @@ class DeliveryOrdersMapController extends GetxController {
       position = await Geolocator.getLastKnownPosition(); // LAT Y LNG (ACTUAL)
       saveLocation();
       animateCameraPosition(
-          position?.latitude ?? 1.2004567, position?.longitude ?? -77.2787444);
+          position?.latitude ?? 28.633379, position?.longitude ?? -106.0799738);
 
       addMarker(
           'delivery',
-          position?.latitude ?? 1.2004567,
-          position?.longitude ?? -77.2787444,
+          position?.latitude ?? 28.633379,
+          position?.longitude ?? -106.0799738,
           'Tu posicion',
           '',
           deliveryMarker!);
 
       addMarker(
           'home',
-          order.address?.lat ?? 1.2004567,
-          order.address?.lng ?? -77.2787444,
+          order.address?.lat ?? 28.633379,
+          order.address?.lng ?? -106.0799738,
           'Lugar de entrega',
           '',
           homeMarker!);
 
       LatLng from = LatLng(position!.latitude, position!.longitude);
       LatLng to = LatLng(
-          order.address?.lat ?? 1.2004567, order.address?.lng ?? -77.2787444);
+          order.address?.lat ?? 28.633379, order.address?.lng ?? -106.0799738);
 
       //setPolylines(from, to);
 
@@ -225,13 +225,13 @@ class DeliveryOrdersMapController extends GetxController {
         position = pos;
         addMarker(
             'delivery',
-            position?.latitude ?? 1.2004567,
-            position?.longitude ?? -77.2787444,
+            position?.latitude ?? 28.633379,
+            position?.longitude ?? -106.0799738,
             'Tu posicion',
             '',
             deliveryMarker!);
-        animateCameraPosition(position?.latitude ?? 1.2004567,
-            position?.longitude ?? -77.2787444);
+        animateCameraPosition(position?.latitude ?? 28.633379,
+            position?.longitude ?? -106.0799738);
         emitPosition();
         isCloseToDeliveryPosition();
       });
