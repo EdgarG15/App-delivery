@@ -77,7 +77,9 @@ class ClientProfileUpdatePage extends StatelessWidget {
         controller: controller.nameController,
         keyboardType: TextInputType.text,
         decoration: const InputDecoration(
-            hintText: 'Nombre', prefixIcon: Icon(Icons.person)),
+          hintText: 'Nombre',
+          prefixIcon: Icon(Icons.person),
+        ),
       ),
     );
   }
@@ -89,7 +91,9 @@ class ClientProfileUpdatePage extends StatelessWidget {
         controller: controller.lastnameController,
         keyboardType: TextInputType.text,
         decoration: const InputDecoration(
-            hintText: 'Apellido', prefixIcon: Icon(Icons.person_outline)),
+          hintText: 'Apellido',
+          prefixIcon: Icon(Icons.person_outline),
+        ),
       ),
     );
   }

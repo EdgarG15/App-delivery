@@ -16,10 +16,10 @@ class ClientProductsListPage extends StatelessWidget {
         length: con.categories.length,
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(120),
+            preferredSize: const Size.fromHeight(120),
             child: AppBar(
                 flexibleSpace: Container(
-                  margin: EdgeInsets.only(top: 15),
+                  margin: const EdgeInsets.only(top: 15),
                   alignment: Alignment.topCenter,
                   child: Wrap(
                     direction: Axis.horizontal,

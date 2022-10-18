@@ -114,8 +114,8 @@ class ClientAddressCreatePage extends StatelessWidget {
             con.createAddress();
           },
           style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 15)),
-          child: Text(
+              padding: const EdgeInsets.symmetric(vertical: 15)),
+          child: const Text(
             'CREAR DIRECCION',
             style: TextStyle(color: Colors.black),
           )),

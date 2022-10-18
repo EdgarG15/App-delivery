@@ -105,19 +105,20 @@ class _MyAppState extends State<MyApp> {
             page: () => ClientPaymentsCreatePage()),
       ],
       theme: ThemeData(
-          primaryColor: Colors.amber,
-          colorScheme: ColorScheme(
-              primary: Colors.amber,
-              secondary: Colors.amberAccent,
-              brightness: Brightness.light,
-              onBackground: Colors.grey,
-              onPrimary: Colors.grey,
-              surface: Colors.grey,
-              onSurface: Colors.grey,
-              error: Colors.grey,
-              onError: Colors.grey,
-              onSecondary: Colors.grey,
-              background: Colors.grey)),
+        primaryColor: Colors.amber,
+        colorScheme: const ColorScheme(
+            primary: Colors.amber,
+            secondary: Colors.amberAccent,
+            brightness: Brightness.light,
+            onBackground: Colors.grey,
+            onPrimary: Colors.grey,
+            surface: Colors.grey,
+            onSurface: Colors.grey,
+            error: Colors.grey,
+            onError: Colors.grey,
+            onSecondary: Colors.grey,
+            background: Colors.grey),
+      ),
       navigatorKey: Get.key,
     );
   }

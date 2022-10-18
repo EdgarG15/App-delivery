@@ -8,7 +8,7 @@ import '../models/category.dart';
 import '../models/user.dart';
 
 class AddressProvider extends GetConnect {
-  String url = Environment.API_URL + 'api/address';
+  String url = '${Environment.API_URL}api/address';
 
   User userSession = User.fromJson(GetStorage().read('user') ?? {});
 
