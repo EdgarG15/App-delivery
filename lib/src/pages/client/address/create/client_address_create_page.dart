@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable
+
 import 'package:app_delivery/src/pages/client/address/create/client_address_create_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,10 +25,10 @@ class ClientAddressCreatePage extends StatelessWidget {
   Widget _iconBack() {
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.only(left: 15),
+        margin: const EdgeInsets.only(left: 15),
         child: IconButton(
             onPressed: () => Get.back(),
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios,
               size: 30,
             )),

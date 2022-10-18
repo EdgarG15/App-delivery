@@ -18,6 +18,7 @@ import 'package:app_delivery/src/pages/restaurant/home/restaurant_home_page.dart
 import 'package:app_delivery/src/pages/restaurant/orders/detail/restaurant_orders_detail_page.dart';
 import 'package:app_delivery/src/pages/restaurant/orders/list/restaurant_orders_list_page.dart';
 import 'package:app_delivery/src/pages/roles/roles_page.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -41,14 +42,15 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     //print('El token de sesion brou: ${userSession.sessionToken}');
   }
 
   @override
   Widget build(BuildContext context) {
-    print('Usuario id: ${userSession.id}');
+    if (kDebugMode) {
+      print('Usuario id: ${userSession.id}');
+    }
 
     return GetMaterialApp(
       title: 'App delivery',
@@ -102,7 +104,7 @@ class _MyAppState extends State<MyApp> {
             name: '/client/address/list', page: () => ClientAddressListPage()),
         GetPage(
             name: '/client/payments/create',
-            page: () => ClientPaymentsCreatePage()),
+            page: () => const ClientPaymentsCreatePage()),
       ],
       theme: ThemeData(
         primaryColor: Colors.amber,

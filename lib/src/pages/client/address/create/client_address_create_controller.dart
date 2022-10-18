@@ -4,6 +4,7 @@ import 'package:app_delivery/src/models/user.dart';
 import 'package:app_delivery/src/pages/client/address/list/client_addres_list_controller.dart';
 import 'package:app_delivery/src/pages/client/address/map/client_address_map_page.dart';
 import 'package:app_delivery/src/providers/address_provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -31,7 +32,9 @@ class ClientAddressCreateController extends GetxController {
         isDismissible: false,
         enableDrag: false);
 
-    print('REF POINT MAP ${refPointMap}');
+    if (kDebugMode) {
+      print('REF POINT MAP $refPointMap');
+    }
     refPointController.text = refPointMap['address'];
     latRefPoint = refPointMap['lat'];
     lngRefPoint = refPointMap['lng'];

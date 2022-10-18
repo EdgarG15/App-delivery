@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class Environment {
   static const String API_URL = "http://192.168.2.125:3000/";
   static const String API_MERCADO_PAGO = "https://api.mercadopago.com/v1";
