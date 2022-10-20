@@ -133,7 +133,7 @@ class RestaurantProductsCreateePage extends StatelessWidget {
       child: Card(
         elevation: 3,
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           height: 70,
           width: MediaQuery.of(context).size.width * 0.18,
           child: imageFile != null
@@ -141,7 +141,7 @@ class RestaurantProductsCreateePage extends StatelessWidget {
                   imageFile,
                   fit: BoxFit.cover,
                 )
-              : Image(
+              : const Image(
                   image: AssetImage('assets/img/images.png'),
                 ),
         ),

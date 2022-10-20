@@ -45,7 +45,7 @@ class RestaurantProductsCreateController extends GetxController {
     print('name: $name');
     print('description $description');
     print('price ${price}');
-    print('id catgory ${idCategory}}');
+    print('id catgory ${idCategory}');
     ProgressDialog progressDialog = ProgressDialog(context: context);
 
     if (isValidForm(name, description, price)) {
