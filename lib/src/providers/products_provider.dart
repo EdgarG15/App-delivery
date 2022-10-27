@@ -11,7 +11,7 @@ import '../models/product.dart';
 import '../models/user.dart';
 
 class ProductsProvider extends GetConnect {
-  String url = Environment.API_URL + 'api/products';
+  String url = '${Environment.API_URL}api/products';
 
   User userSession = User.fromJson(GetStorage().read('user') ?? {});
 

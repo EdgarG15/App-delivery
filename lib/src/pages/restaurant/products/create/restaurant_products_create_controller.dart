@@ -7,7 +7,6 @@ import 'package:app_delivery/src/models/response_api.dart';
 import 'package:app_delivery/src/providers/categories_provider.dart';
 import 'package:app_delivery/src/providers/products_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
@@ -129,7 +128,7 @@ class RestaurantProductsCreateController extends GetxController {
           Get.back();
           selectImage(ImageSource.gallery, numberFile);
         },
-        child: Text(
+        child: const Text(
           'GALERIA',
           style: TextStyle(color: Colors.black),
         ));
@@ -138,13 +137,13 @@ class RestaurantProductsCreateController extends GetxController {
           Get.back();
           selectImage(ImageSource.camera, numberFile);
         },
-        child: Text(
+        child: const Text(
           'CAMARA',
           style: TextStyle(color: Colors.black),
         ));
 
     AlertDialog alertDialog = AlertDialog(
-      title: Text('Selecciona una opcion'),
+      title: const Text('Selecciona una opcion'),
       actions: [galleryButton, cameraButton],
     );
 

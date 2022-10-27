@@ -90,14 +90,14 @@ class RestaurantProductsCreateePage extends StatelessWidget {
       child: DropdownButton(
         underline: Container(
           alignment: Alignment.centerRight,
-          child: Icon(
+          child: const Icon(
             Icons.arrow_drop_down_circle,
             color: Colors.amber,
           ),
         ),
         elevation: 3,
         isExpanded: true,
-        hint: Text(
+        hint: const Text(
           'Seleccionar categoria',
           style: TextStyle(fontSize: 15),
         ),

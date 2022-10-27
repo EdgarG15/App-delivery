@@ -134,7 +134,7 @@ class RegisterController extends GetxController {
           Get.back();
           selectImage(ImageSource.gallery);
         },
-        child: Text(
+        child: const Text(
           'GALERIA',
           style: TextStyle(color: Colors.black),
         ));
@@ -143,13 +143,13 @@ class RegisterController extends GetxController {
           Get.back();
           selectImage(ImageSource.camera);
         },
-        child: Text(
+        child: const Text(
           'CAMARA',
           style: TextStyle(color: Colors.black),
         ));
 
     AlertDialog alertDialog = AlertDialog(
-      title: Text('Selecciona una opcion'),
+      title: const Text('Selecciona una opcion'),
       actions: [galleryButton, cameraButton],
     );
 
